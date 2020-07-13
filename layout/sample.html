@@ -12,13 +12,24 @@
 
     <title>Name</title>
     <style>
+        
+        .navbar
+        {
+            height: 100px;
+            /* background-color: blue; */
+        }
         p{
             margin-bottom: 0;
         }
         .jumbotron{
-            margin-bottom: 0;
-            padding: 10px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding: 20px;
         }
+        .result{
+            margin-top: 50px;
+        }
+        
     </style>
 </head>
 
@@ -88,8 +99,19 @@
         </div>
 
        
-        <div class="row">
-            
+        <div class="row result">
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="result" aria-label="Recipient's username"
+                        aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">cpoy</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 qrcode">
+                qrcode
+            </div>
         </div>
 
     </div>
