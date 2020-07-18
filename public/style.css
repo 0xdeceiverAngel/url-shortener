@@ -1,0 +1,48 @@
+/* // */
+ .navbar {
+     height: 100px;
+     /* background-color: blue; */
+ }
+ 
+ p {
+     margin-bottom: 0;
+ }
+ 
+ .jumbotron {
+     margin-top: 50px;
+     margin-bottom: 50px;
+     /* padding: 50px; */
+     /* height: 200px; */
+ }
+ 
+ .result {
+     margin-top: 50px;
+ }
+ 
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6 {
+     font-family: 'Noto Sans TC', sans-serif;
+ }
+ 
+ p,
+ a,
+ input,
+ label,
+ textarea,
+ span,
+ ul,
+ li {
+     font-family: 'Quicksand', sans-serif;
+ }
+ 
+ .footer .jumbotron {
+     margin: 0 0 0 0;
+     /* margin-top: 80px; */
+     background: #f8f8f8;
+     padding:16px;
+     height: 184px;
+ }
