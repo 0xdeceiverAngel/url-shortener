@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\News;
+
 Route::get('/', function () {
     // return view('welcome');
     return view('home');
@@ -43,15 +43,10 @@ Route::get('/r', function () {
 
 Route::get('/a', function () {
 
-    $user=DB::table('tab')->get();
+    $user = DB::table('tab')->get();
     echo $user;
 });
 // sudo apt install php-pgsql
 Route::get('/in', function () {
     DB::insert('insert into tab(a) values(?)', ['44']);
-});
-Route::get('/read', function () {
-    $posts = News::all();
-
-    echo $posts;
 });

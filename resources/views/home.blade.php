@@ -72,11 +72,11 @@
 
             <!-- ------------------------------------------------------------------------------ -->
 
-            
+
             <div class="tab-pane fade" id="pills-img" role="tabpanel" aria-labelledby="pills-img-tab">
                 <div class="input-group mb-3">
                     <div class="custom-file">
-                        <input type="file" accept="image/* "class="custom-file-input" id="inputGroupFile02">
+                        <input type="file" accept="image/* " class="custom-file-input" id="inputGroupFile02">
                         <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose
                             file</label>
                     </div>
