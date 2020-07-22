@@ -52,10 +52,10 @@
 
         <ul class="nav nav-pills mb-3 justify-content-center  " id="pills-tab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">url</a>
+                <a class="nav-link active url_input_space" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">url</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-img-tab" data-toggle="pill" href="#pills-img" role="tab" aria-controls="pills-img" aria-selected="false">img</a>
+                <a class="nav-link img_input_space" id="pills-img-tab" data-toggle="pill" href="#pills-img" role="tab" aria-controls="pills-img" aria-selected="false">img</a>
             </li>
         </ul>
 
@@ -81,7 +81,7 @@
                             file</label>
                     </div>
                     <div class="input-group-append">
-                        <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+                        <span class="input-group-text img_upload" id="inputGroupFileAddon02">Upload</span>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
             <div class="input-group mb-3 ">
                 <input type="text" class="form-control url_result " placeholder="result" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">copy</button>
+                    <button class="btn btn-outline-secondary copy_btn" type="button" id="button-addon2">copy</button>
                 </div>
             </div>
             <div class="url_qrcode text-center ">
