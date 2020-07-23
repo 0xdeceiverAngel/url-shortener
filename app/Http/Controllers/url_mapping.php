@@ -45,8 +45,7 @@ class url_mapping extends Controller
             $find = DB::table('mapping')->where('redirect_url', $hash_url)->first();
             if ($find != NULL) {
                 return (array('org' => urlencode($org_url), 'result' => $hash_url));
-
-            } else {    
+            } else {
 
                 DB::table('mapping')->insert(
                     [
