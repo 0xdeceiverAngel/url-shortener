@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/img', function () {
+    return view('img');
+});
 Route::get('/', function () {
     // return view('welcome');
     return view('home');

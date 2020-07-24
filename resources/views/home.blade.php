@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&family=Quicksand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>Name</title>
+    <title>Url shortener</title>
 
 </head>
 
@@ -93,6 +93,9 @@
         <div class="result_zone d-none">
 
             <div class="input-group mb-3 ">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">https://example.com/</span>
+                </div>
                 <input type="text" class="form-control url_result " placeholder="result" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary copy_btn" type="button" id="button-addon2">copy</button>
