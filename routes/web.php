@@ -32,6 +32,7 @@ Route::get('/{url}', 'url_mapping@redirect');
 // });
 
 Route::post('/api', 'url_mapping@creat');
+Route::post('/img_api', 'url_mapping@img_creat');
 
 
 // Route::get('/r', function () {

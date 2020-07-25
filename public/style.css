@@ -45,3 +45,6 @@
      padding:16px;
      height: 184px;
  }
+ .grecaptcha-badge{
+    z-index: 10000;
+}

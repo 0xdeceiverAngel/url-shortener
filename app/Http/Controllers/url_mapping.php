@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Validator;
-
+use Storage;
 class url_mapping extends Controller
 {
     //
@@ -59,5 +59,9 @@ class url_mapping extends Controller
                 return (array('org' => urlencode($org_url), 'result' => $hash_url));
             }
         }
+    }
+    public function img_creat(Request $request)
+    {
+        
     }
 }
