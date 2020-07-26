@@ -52,7 +52,7 @@
 
 
     <script src='https://www.google.com/recaptcha/api.js?render=6Le1lLUZAAAAAEpqoDAtR-mmAvQ28F2ymOVqF7Lm'></script>
-    
+
 
 
     <div class="container ">
@@ -79,25 +79,34 @@
 
             <!-- ------------------------------------------------------------------------------ -->
 
-
             <div class="tab-pane fade" id="pills-img" role="tabpanel" aria-labelledby="pills-img-tab">
-                <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" accept="image/* " class="custom-file-input" id="inputGroupFile02">
-                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose
-                            file</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" accept="image/* " class="custom-file-input img_upload" id="inputGroupFile02 ">
+                                <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose
+                                    file</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="input-group-append">
-                        <span class="input-group-text img_upload" id="inputGroupFileAddon02">Upload</span>
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control password_input" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary img_send" type="button" id="button-addon2 ">Upload</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
 
 
-
-        <div class="result_zone d-none">
+    <div class="result_zone d-none">
+        <div class="container">
 
             <div class="input-group mb-3 ">
                 <div class="input-group-prepend">
@@ -111,13 +120,16 @@
             <div class="url_qrcode text-center ">
             </div>
         </div>
-
-
-
-
-
-
     </div>
+
+
+
+
+
+
+
+
+
 
     <div class="footer fixed-bottom">
         <div class="jumbotron ">
@@ -174,7 +186,7 @@
 
 </html>
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
-<script src="my.js"></script>
+<script src="home.js"></script>
 </body>
 
 </html>

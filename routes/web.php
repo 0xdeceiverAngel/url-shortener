@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +32,7 @@ Route::get('/{url}', 'url_mapping@redirect');
 //     ]);
 // });
 
-Route::post('/api', 'url_mapping@creat');
+Route::post('/api', 'url_mapping@creat')->Middleware('g-recaptcha');
 Route::post('/img_api', 'url_mapping@img_creat');
 
 

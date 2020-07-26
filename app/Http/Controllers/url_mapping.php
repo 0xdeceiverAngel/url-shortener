@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Storage as FacadesStorage;
 use Validator;
 use Storage;
 class url_mapping extends Controller
@@ -27,7 +28,7 @@ class url_mapping extends Controller
     public function creat(Request $request)
     {
         // $times=0;
-
+        // return $request->grecaptcha;
         $check = Validator::make($request->all(), [
             'url' => 'url'
         ]);
@@ -62,6 +63,21 @@ class url_mapping extends Controller
     }
     public function img_creat(Request $request)
     {
+        $check = Validator::make($request->all(), [
+            'file' => 'Image'
+        ]);
+        if ($check->fails()) {
+            return (array('result' => 'img_error'));
+        }else{
+            $file_extension=$request->extension;
+            $ranom_file_name = bin2hex(random_bytes(16));
+            $ranom_file_name = substr($ranom_file_name, 0, 6);
+
+            Storage::put($ranom_file_name .'.'. $file_extension, $request->file('file')->get());
+            return ($ranom_file_name);
+        }
+
+
         
     }
 }
