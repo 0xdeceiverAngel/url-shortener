@@ -69,12 +69,22 @@ class url_mapping extends Controller
         if ($check->fails()) {
             return (array('result' => 'img_error'));
         }else{
+            $password=$request->password;
             $file_extension=$request->extension;
             $ranom_file_name = bin2hex(random_bytes(16));
             $ranom_file_name = substr($ranom_file_name, 0, 6);
 
             Storage::put($ranom_file_name .'.'. $file_extension, $request->file('file')->get());
-            return ($ranom_file_name);
+            // return ($ranom_file_name);
+             DB::table('img_mapping')->insert(
+                    [
+                        'file_name' => $ranom_file_name,
+                        'redirect_url' => $ranom_file_name,
+                        'extension'=>$file_extension,
+                        'password'=> $password,
+                    ]);
+            
+            return (array('result' => $ranom_file_name));
         }
 
 
