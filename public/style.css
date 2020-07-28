@@ -48,3 +48,6 @@
  .grecaptcha-badge{
     z-index: 10000;
 }
+   .modal-dialog {
+            width: 350px;
+        }

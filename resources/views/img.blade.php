@@ -29,50 +29,28 @@
             </nav>
         </div>
     </div>
+    <script src='https://www.google.com/recaptcha/api.js?render=6Le1lLUZAAAAAEpqoDAtR-mmAvQ28F2ymOVqF7Lm'></script>
 
     <div class="summit_area">
-       
-        <div class=" container ">
-             <div class="row justify-content-center ">
-
-            <input type="text" " placeholder=" password ">
+        <div class="container">
+            <div class="row justify-content-center">
+                 <div class="input-group mb-3 " style="width:360px; margin-top: 150px;">
+  <input type="text" class="form-control" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary summit_btn" type="button" id="button-addon2">Summit</button>
+  </div>
+            </div>
         </div>
-            <div class=" row justify-content-center ">
-
-                <script src='https://www.google.com/recaptcha/api.js?render=6Le1lLUZAAAAAEpqoDAtR-mmAvQ28F2ymOVqF7Lm'></script>
-                    <script>
-      function btnonClick() {
-        // e.preventDefault();
-        grecaptcha.ready(function() {
-          grecaptcha.execute('6Le1lLUZAAAAAEpqoDAtR-mmAvQ28F2ymOVqF7Lm', {action: 'submit'}).then(function(token) {
-              console.log(token);
-              // Add your logic to submit to your backend server here.
-          });
-        });
-      }
-  </script>
-
-
-
-
-
-            <!-- <script src=" https://www.google.com/recaptcha/api.js " async defer></script> -->
-
-            <!-- <div class=" g-recaptcha " data-sitekey=" 6LfXkrUZAAAAAB3oiBuvZdDkA5dp8tEZoJDpd6fw "></div> -->
-            <!-- <form action=" ? " method=" POST "> -->
-            <!-- box -->
-            <!-- <div class=" g-recaptcha " data-sitekey=" 6LeMjbUZAAAAANCQf3aXyusuyHk2-8RMiYkIp9eb "></div> -->
-            <!-- <br /> -->
-            <!-- </form> -->
-
-        </div>
-        <div class=" row justify-content-center ">
-            <button type=" button " class=" btn btn-primary" onclick="btnonClick()">Primary</button>
-        </div>
-
+</div>
+    </div>
     </div>
 
+    <div class="img_aera">
+        <div class="container">
+            <div class="row">
 
+            </div>
+        </div>
     </div>
 
     <div class=" footer fixed-bottom ">
@@ -103,6 +81,28 @@
         </div>
 
     </div>
+<!-- ---------------------------------------- -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Error message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 
