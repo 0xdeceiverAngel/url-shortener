@@ -96,9 +96,24 @@ $(document).ready(function () {
                     contentType : false,
                     processData : false,
                     cache : false,
-                    success:function(respon)
+                    success:function(data)
                     {
-                        console.log(respon);
+                        // console.log(respon);
+                        $(".url_result").val(data.result);
+                        $(".url_qrcode").empty();
+                        if (data.result != "img_error") {
+                            $(".url_qrcode").qrcode({
+                                width: 120,
+                                height: 120,
+                                text: data.result,
+                            });
+                            $(".result_zone").removeClass("d-none");
+                        }
+                        else {
+                            // alert('url error');
+                            $('.modal-body').html(data.result);
+                            $('.modal').modal('show')
+                        }
                     }
                 })
 
