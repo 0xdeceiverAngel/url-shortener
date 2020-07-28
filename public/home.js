@@ -28,7 +28,9 @@ $(document).ready(function () {
                             $(".result_zone").removeClass("d-none");
                         }
                         else {
-                            alert('url error');
+                            // alert('url error');
+                            $('.modal-body').html(data.result);
+                            $('.modal').modal('show')
                         }
                     }
                 );
@@ -51,11 +53,16 @@ $(document).ready(function () {
 
     $(".url_input_space").click(function () {
         $(".result_zone").addClass("d-none");
+        $(".img_upload").next(".custom-file-label").html('');
+        $('.password_input').val('')
         $(".url_input").val("");
     });
     $(".img_input_space").click(function () {
         $(".result_zone").addClass("d-none");
+        $(".img_upload").next(".custom-file-label").html('');
+        $('.password_input').val('')
         $(".url_input").val("");
+
     });
     $(".copy_btn").click(function () {
         var copyText = $(".url_result");
