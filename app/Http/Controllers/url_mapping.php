@@ -13,16 +13,26 @@ class url_mapping extends Controller
     public function redirect($url)
     {
         // echo $url;
-        $find = DB::table('mapping')->where('redirect_url', $url)->first();
-        if ($find != NULL) {
-            return redirect($find->org_url, 301
-                // , ['custom-header' => 'custom value']
-            );
+        $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+        if ($find_url != NULL) {
+            if($find_url->type==='url')
+            {
+                return redirect($find_url->org_url, 301
+                    // , ['custom-header' => 'custom value']
+                );
+            }
+            else if($find_url->type === 'img')
+            {
+                return view('img');
+            }
+            
         } else {
             return view('home');
         }
         // return $find->org_url;
         // return $find;
+        return view('home');
+
 
     }
     public function creat(Request $request)
@@ -51,7 +61,8 @@ class url_mapping extends Controller
                 DB::table('mapping')->insert(
                     [
                         'org_url' => $org_url,
-                        'redirect_url' => $hash_url
+                        'redirect_url' => $hash_url,
+                        'type'=>'url'
                     ]
                     // 'redirect_time'=>'0',
                     // 'creat_time'=>$date]
@@ -76,18 +87,21 @@ class url_mapping extends Controller
 
             Storage::put($ranom_file_name .'.'. $file_extension, $request->file('file')->get());
             // return ($ranom_file_name);
-             DB::table('img_mapping')->insert(
+             DB::table('mapping')->insert(
                     [
                         'file_name' => $ranom_file_name,
                         'redirect_url' => $ranom_file_name,
                         'extension'=>$file_extension,
                         'password'=> $password,
+                        'type'=>'img'
                     ]);
             
             return (array('result' => $ranom_file_name));
         }
-
-
         
+    }
+    public function password_check(Request $request)
+    {
+        $path=$request->path();
     }
 }

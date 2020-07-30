@@ -33,7 +33,7 @@ Route::get('/{url}', 'url_mapping@redirect');
 // });
 
 Route::post('/api', 'url_mapping@creat')->Middleware('g-recaptcha');
-Route::post('/img_api', 'url_mapping@img_creat');
+Route::post('/img_api', 'url_mapping@img_creat')->Middleware('g-recaptcha');
 
 
 // Route::get('/r', function () {

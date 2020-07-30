@@ -19,6 +19,11 @@ class CreateMappingTable extends Migration
             $table->unsignedInteger('redirect_times')->default('0')->nullable($value = true);
             $table->dateTimeTz('creat_time')->default(NULL)->nullable($value = true);
             $table->dateTimeTz('last_time_use')->default(NULL)->nullable($value = true);
+            $table->text('file_name')->default(NULL)->nullable($value = true);
+            $table->text('password')->default(NULL)->nullable($value = true);
+            $table->text('extension')->default(NULL)->nullable($value = true);
+            $table->text('type')->default(NULL)->nullable($value = true);
+
         });
     }
 
