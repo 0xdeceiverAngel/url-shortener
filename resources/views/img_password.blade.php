@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&family=Quicksand&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="img_page_style.css">
+    <link rel="stylesheet" href="img_password_page.css">
     <title>Url shortener</title>
 
 
@@ -35,9 +35,9 @@
         <div class="container">
             <div class="row justify-content-center">
                  <div class="input-group mb-3 " style="width:360px; margin-top: 150px;">
-  <input type="text" class="form-control" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <input type="text" class="form-control password_input" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
   <div class="input-group-append">
-    <button class="btn btn-outline-secondary summit_btn" type="button" id="button-addon2">Summit</button>
+    <button class="btn btn-outline-secondary password_send_btn" type="button" id="button-addon2">Summit</button>
   </div>
             </div>
         </div>
@@ -115,7 +115,7 @@
 </body>
 
 </html>
-<!-- <script src=" my.js "></script> -->
+<script src=" img_password_page.js "></script>
 </body>
 
 </html>

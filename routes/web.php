@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// Route::get('/{url}', 'url_mapping@db');
 Route::get('/img', function () {
-    return view('img');
+    return view('img_password');
 });
 Route::get('/', function () {
     // return view('welcome');
