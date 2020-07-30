@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
+use Intervention\Image\Facades\Image;
 use Validator;
 use Storage;
+
 class url_mapping extends Controller
 {
     //
-    public function redirect($url)
+    public function redirect(Request $request)
     {
-        // echo $url;
+        $url=$request->url;
         $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+        $file_extension=$find_url->extension;
+        // return array(['ext'=>$file_extension,''])
+        $filename=$find_url->file_name.".".$file_extension;
+        $password=$find_url->password;
+        $user_input_password=$request->password;
         if ($find_url != NULL) {
             if($find_url->type==='url')
             {
@@ -42,10 +49,13 @@ class url_mapping extends Controller
         $check = Validator::make($request->all(), [
             'url' => 'url'
         ]);
-
         if ($check->fails()) {
             return (array('result' => 'url_error'));
-        } else {
+        }else if($request->url===NULL)
+        {
+            return array('result'=>'url empty');
+        }
+        else {
             $org_url = $request->url;
 
             $to_hash = $org_url . "Sa1t";
@@ -53,15 +63,15 @@ class url_mapping extends Controller
             $hash_url = substr($hash_url, 0, 5);
             // $date = new DateTime();
             // $date= $date->format('Y-m-d H:i:s');
-            $find = DB::table('mapping')->where('redirect_url', $hash_url)->first();
+            $find = DB::table('mapping')->where('redirect_url', (string)$hash_url)->first();
             if ($find != NULL) {
                 return (array('org' => urlencode($org_url), 'result' => $hash_url));
             } else {
 
                 DB::table('mapping')->insert(
                     [
-                        'org_url' => $org_url,
-                        'redirect_url' => $hash_url,
+                        'org_url' => (string) $org_url,
+                        'redirect_url' => (string) $hash_url,
                         'type'=>'url'
                     ]
                     // 'redirect_time'=>'0',
@@ -89,10 +99,10 @@ class url_mapping extends Controller
             // return ($ranom_file_name);
              DB::table('mapping')->insert(
                     [
-                        'file_name' => $ranom_file_name,
-                        'redirect_url' => $ranom_file_name,
-                        'extension'=>$file_extension,
-                        'password'=> $password,
+                        'file_name' => (string) $ranom_file_name,
+                        'redirect_url' => (string) $ranom_file_name,
+                        'extension'=>(string) $file_extension,
+                        'password'=> (string) $password,
                         'type'=>'img'
                     ]);
             
