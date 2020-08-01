@@ -16,7 +16,7 @@ class recaptcha_verify
      */
     public function handle($request, Closure $next)
     {
-        if(!$this->token_verify($request->grecaptcha))
+        if(!$this->token_verify($request->grecaptcha ??'empty'))
         {
             return (array('result' => 'recaptcha verify fail'));
         }
@@ -25,6 +25,11 @@ class recaptcha_verify
     }
     private function token_verify(string $token)
     {
+        if($token==='empty')
+        {
+            return false;
+
+        }
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $postdata = [
             // 'secret' => config('settings.google_recaptcha_secret'),

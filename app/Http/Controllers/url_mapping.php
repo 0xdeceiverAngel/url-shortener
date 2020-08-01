@@ -14,48 +14,46 @@ class url_mapping extends Controller
     //
     public function redirect(Request $request)
     {
-        $url=$request->url;
+
+        $url = $request->url;
         $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-        $file_extension=$find_url->extension;
-        // return array(['ext'=>$file_extension,''])
-        $filename=$find_url->file_name.".".$file_extension;
-        $password=$find_url->password;
-        $user_input_password=$request->password;
+        $file_extension = $find_url->extension;
+        // return array(['ext'=>$file_extension,'']);
+        $filename = $find_url->file_name . "." . $file_extension;
+        $password = $find_url->password;
+        $user_input_password = $request->password;
         if ($find_url != NULL) {
-            if($find_url->type==='url')
-            {
+            if ($find_url->type === 'url') { // if is url redirecr
                 return redirect($find_url->org_url, 301
                     // , ['custom-header' => 'custom value']
                 );
+            } else if ($find_url->type === 'img' && $password==='') { //if is img and no password set
+                return ('u got img');
+            }else if($find_url->type === 'img' && $password === $user_input_password){// if is img and password correct
+                return ('u got img');
+            } 
+            else if ($find_url->type === 'img') { //if is img and have to check password
+                return view('img_password');
             }
-            else if($find_url->type === 'img')
-            {
-                return view('img');
-            }
-            
         } else {
             return view('home');
         }
         // return $find->org_url;
         // return $find;
         return view('home');
-
-
     }
     public function creat(Request $request)
     {
-        // $times=0;
-        // return $request->grecaptcha;
+
+        if ($request->url ?? 'empty') {                 //avoid url is null 
+            return (array('result' => 'url_empty'));
+        }
         $check = Validator::make($request->all(), [
             'url' => 'url'
         ]);
         if ($check->fails()) {
             return (array('result' => 'url_error'));
-        }else if($request->url===NULL)
-        {
-            return array('result'=>'url empty');
-        }
-        else {
+        } else {
             $org_url = $request->url;
 
             $to_hash = $org_url . "Sa1t";
@@ -72,7 +70,7 @@ class url_mapping extends Controller
                     [
                         'org_url' => (string) $org_url,
                         'redirect_url' => (string) $hash_url,
-                        'type'=>'url'
+                        'type' => 'url'
                     ]
                     // 'redirect_time'=>'0',
                     // 'creat_time'=>$date]
@@ -89,29 +87,29 @@ class url_mapping extends Controller
         ]);
         if ($check->fails()) {
             return (array('result' => 'img_error'));
-        }else{
-            $password=$request->password;
-            $file_extension=$request->extension;
+        } else {
+            $password = $request->password;
+            $file_extension = $request->extension;
             $ranom_file_name = bin2hex(random_bytes(16));
             $ranom_file_name = substr($ranom_file_name, 0, 6);
 
-            Storage::put($ranom_file_name .'.'. $file_extension, $request->file('file')->get());
+            Storage::put($ranom_file_name . '.' . $file_extension, $request->file('file')->get());
             // return ($ranom_file_name);
-             DB::table('mapping')->insert(
-                    [
-                        'file_name' => (string) $ranom_file_name,
-                        'redirect_url' => (string) $ranom_file_name,
-                        'extension'=>(string) $file_extension,
-                        'password'=> (string) $password,
-                        'type'=>'img'
-                    ]);
-            
+            DB::table('mapping')->insert(
+                [
+                    'file_name' => (string) $ranom_file_name,
+                    'redirect_url' => (string) $ranom_file_name,
+                    'extension' => (string) $file_extension,
+                    'password' => (string) $password,
+                    'type' => 'img'
+                ]
+            );
+
             return (array('result' => $ranom_file_name));
         }
-        
     }
     public function password_check(Request $request)
     {
-        $path=$request->path();
+        $path = $request->path();
     }
 }
