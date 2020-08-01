@@ -19,7 +19,7 @@ $(document).ready(function () {
                         // alert(data.result);
                         $(".url_result").val(data.result);
                         $(".url_qrcode").empty();
-                        if (data.result != "url_error") {
+                        if (data.result != "url_error" && data.result !='url_empty') {
                             $(".url_qrcode").qrcode({
                                 width: 120,
                                 height: 120,
@@ -101,7 +101,7 @@ $(document).ready(function () {
                         // console.log(respon);
                         $(".url_result").val(data.result);
                         $(".url_qrcode").empty();
-                        if (data.result != "img_error") {
+                        if (data.result != "img_error" ) {
                             $(".url_qrcode").qrcode({
                                 width: 120,
                                 height: 120,

@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="mynavbar">
+    <div class="mynavbar sticky-top">
         <div class="container ">
             <nav class="navbar navbar-expand-lg  navbar-light" style="background-color:white;">
                 <a class="" href="#">
@@ -131,7 +131,7 @@
 
 
 
-    <div class="footer fixed-bottom">
+    <div class="footer ">
         <div class="jumbotron ">
             <div class="container">
                 <div class="row">
@@ -187,7 +187,7 @@
                 </div>
                 <div class="modal-body">
 
-            </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
