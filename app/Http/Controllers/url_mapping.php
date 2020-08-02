@@ -17,35 +17,39 @@ class url_mapping extends Controller
 
         $url = $request->url;
         $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-        $file_extension = $find_url->extension;
-        // return array(['ext'=>$file_extension,'']);
-        $filename = $find_url->file_name . "." . $file_extension;
-        $password = $find_url->password;
-        $user_input_password = $request->password;
         if ($find_url != NULL) {
             if ($find_url->type === 'url') { // if is url redirecr
                 return redirect($find_url->org_url, 301
                     // , ['custom-header' => 'custom value']
                 );
-            } else if ($find_url->type === 'img' && $password==='') { //if is img and no password set
-                return ('u got img');
-            }else if($find_url->type === 'img' && $password === $user_input_password){// if is img and password correct
-                return ('u got img');
-            } 
-            else if ($find_url->type === 'img') { //if is img and have to check password
+            } else if ($find_url->type === 'img' && $find_url->password === '' && $request->isMethod('get')) { //if is img and no password set
+                $file_extension = $find_url->extension;
+                $filename = $find_url->file_name . "." . $file_extension;
+                $contents = Storage::get($filename);
+                $base64_data=base64_encode($contents);
+                return view('img_password',
+                    ['img_data'=> $base64_data,
+                      'summit_disyplay'=>'d-none',])->render();
+                // return base64_encode($contents);
+            } else if ($find_url->type === 'img' && $find_url->password  === $request->password && $request->isMethod('post')) { // if is img and password correct
+                $file_extension = $find_url->extension;
+                $filename = $find_url->file_name . "." . $file_extension;
+                $contents = Storage::get($filename);
+                $base64_data = base64_encode($contents);
+                return $base64_data;
+            } else if ($find_url->type === 'img') { //if is img and have to check password
                 return view('img_password');
             }
         } else {
-            return view('home');
+            return redirect('/', 301
+                // , ['custom-header' => 'custom value']
+            );
         }
-        // return $find->org_url;
-        // return $find;
-        return view('home');
     }
     public function creat(Request $request)
     {
 
-        if ($request->url ?? 'empty') {                 //avoid url is null 
+        if (is_null($request->url)) {                 //avoid url is null 
             return (array('result' => 'url_empty'));
         }
         $check = Validator::make($request->all(), [
@@ -107,9 +111,5 @@ class url_mapping extends Controller
 
             return (array('result' => $ranom_file_name));
         }
-    }
-    public function password_check(Request $request)
-    {
-        $path = $request->path();
     }
 }

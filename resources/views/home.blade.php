@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="mynavbar sticky-top">
+    <div class="mynavbar ">
         <div class="container ">
             <nav class="navbar navbar-expand-lg  navbar-light" style="background-color:white;">
                 <a class="" href="#">

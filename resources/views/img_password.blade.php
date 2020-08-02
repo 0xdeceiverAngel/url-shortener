@@ -31,24 +31,24 @@
     </div>
     <script src='https://www.google.com/recaptcha/api.js?render=6Le1lLUZAAAAAEpqoDAtR-mmAvQ28F2ymOVqF7Lm'></script>
 
-    <div class="summit_area">
+    <div class="summit_area {{$summit_disyplay ?? ''}}">
         <div class="container">
             <div class="row justify-content-center">
-                 <div class="input-group mb-3 " style="width:360px; margin-top: 150px;">
-  <input type="text" class="form-control password_input" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary password_send_btn" type="button" id="button-addon2">Summit</button>
-  </div>
+                <div class="input-group mb-3 " style="width:360px; margin-top: 150px;">
+                    <input type="text" class="form-control password_input" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary password_send_btn" type="button" id="button-addon2">Summit</button>
+                    </div>
+                </div>
             </div>
         </div>
-</div>
     </div>
     </div>
 
     <div class="img_aera">
         <div class="container">
-            <div class="row">
-
+            <div class="row justify-content-center">
+                <img src="data:image/png;base64,{{$img_data??''}}" class="img_show" alt="">
             </div>
         </div>
     </div>
@@ -81,9 +81,9 @@
         </div>
 
     </div>
-<!-- ---------------------------------------- -->
+    <!-- ---------------------------------------- -->
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -94,7 +94,7 @@
                 </div>
                 <div class="modal-body">
 
-            </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
