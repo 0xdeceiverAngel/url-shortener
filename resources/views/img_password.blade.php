@@ -5,7 +5,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Url Shortener">
+    <meta property="og:image:type" content="image/jpg">
+    <meta property="og:description" content="Make url easiser" />
+    <!-- <meta property="og:image" content="og_logo.jpg"> -->
+    <!-- <meta property="og:image:width" content="48" /> -->
+    <!-- <meta property="og:image:height" content="48" /> -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&family=Quicksand&display=swap" rel="stylesheet">
