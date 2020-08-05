@@ -39,3 +39,11 @@ handly create db then use `php artisan migrate` to creat table
 ```
 mysql> CREATE DATABASE `url_db`;
 ```
+
+## disable kernel Middleware
+```
+// \Illuminate\Session\Middleware\StartSession::class,
+// \Illuminate\Session\Middleware\AuthenticateSession::class,
+// \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+// \App\Http\Middleware\VerifyCsrfToken::class,
+```
