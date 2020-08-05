@@ -22,7 +22,7 @@ class url_mapping extends Controller
                 return redirect($find_url->org_url, 301
                     // , ['custom-header' => 'custom value']
                 );
-            } else if ($find_url->type === 'img' && $find_url->password === '' && $request->isMethod('get')) { //if is img and no password set
+            } else if ($find_url->type === 'img' && is_null($find_url->password) && $request->isMethod('get')) { //if is img and no password set
                 $file_extension = $find_url->extension;
                 $filename = $find_url->file_name . "." . $file_extension;
                 $contents = Storage::get($filename);
