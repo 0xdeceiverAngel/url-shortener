@@ -26,10 +26,14 @@ class url_mapping extends Controller
                 $file_extension = $find_url->extension;
                 $filename = $find_url->file_name . "." . $file_extension;
                 $contents = Storage::get($filename);
-                $base64_data=base64_encode($contents);
-                return view('img_password',
-                    ['img_data'=> $base64_data,
-                      'summit_disyplay'=>'d-none',])->render();
+                $base64_data = base64_encode($contents);
+                return view(
+                    'img_password',
+                    [
+                        'img_data' => $base64_data,
+                        'summit_disyplay' => 'd-none',
+                    ]
+                )->render();
                 // return base64_encode($contents);
             } else if ($find_url->type === 'img' && $find_url->password  === $request->password && $request->isMethod('post')) { // if is img and password correct
                 $file_extension = $find_url->extension;
@@ -37,8 +41,15 @@ class url_mapping extends Controller
                 $contents = Storage::get($filename);
                 $base64_data = base64_encode($contents);
                 return $base64_data;
+            } else if ($find_url->type === 'img' && $find_url->password  != $request->password && $request->isMethod('post')) {
+                return 'password error';
             } else if ($find_url->type === 'img') { //if is img and have to check password
-                return view('img_password');
+                return view(
+                    'img_password',
+                    [
+                        'summit_disyplay' => 'input password',
+                    ]
+                )->render();
             }
         } else {
             return redirect('/', 301
