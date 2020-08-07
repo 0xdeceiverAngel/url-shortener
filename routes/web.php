@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/{url}', 'url_mapping@db');
 Route::post('/api', 'url_mapping@creat')->Middleware('g-recaptcha');
 Route::post('/img_api', 'url_mapping@img_creat')->Middleware('g-recaptcha');
-// Route::get('/db', function () {
-    // return DB::table('mapping')->get();
-// });
+Route::get('/db', function () {
+    return DB::table('mapping')->get();
+});
 
 Route::get('/img', function () {
     return view('img_password');

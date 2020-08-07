@@ -14,8 +14,15 @@ $(document).ready(function() {
                     },
                     function(data) {
                         // alert('got it');
-                        $('.img_show').attr("src", "data:image/png;base64," + data);
-                        $('.summit_area').hide();
+                        if (data == 'password error') {
+                            $('.modal_error').html('password error');
+                            $('.modal').modal('show');
+                            $(".password_input").val('');
+                        } else {
+                            $('.img_show').attr("src", "data:image/png;base64," + data);
+                            $('.summit_area').hide();
+                        }
+
                     }
                 );
 
