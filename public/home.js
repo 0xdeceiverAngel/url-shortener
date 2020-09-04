@@ -102,17 +102,17 @@ $(document).ready(function() {
                         $(".url_result").val(data.result);
                         $(".url_qrcode").empty();
                         $('.progress_modal').modal('hide');
-                        if (data.result != "img_error") {
+                        if (data.result == "img_error" || data.result == "must enter password") {
+                            // alert('url error');
+                            $('.modal-body').html(data.result);
+                            $('.modal').modal('show')
+                        } else {
                             $(".url_qrcode").qrcode({
                                 width: 120,
                                 height: 120,
                                 text: data.result,
                             });
                             $(".result_zone").removeClass("d-none");
-                        } else {
-                            // alert('url error');
-                            $('.modal-body').html(data.result);
-                            $('.modal').modal('show')
                         }
                     }
                 })

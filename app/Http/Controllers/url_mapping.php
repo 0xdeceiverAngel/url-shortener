@@ -103,7 +103,7 @@ class url_mapping extends Controller
         if ($check->fails()) {
             return (array('result' => 'img_error'));
         } else if (is_null($request->password)) {
-            return (array('result' => 'extension_error'));
+            return (array('result' => 'must enter password'));
         } else {
             $password = $request->password;
             $file_extension = $request->extension;
