@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 // Route::get('/{url}', 'url_mapping@db');
-Route::post('/api', 'url_mapping@creat')->Middleware('g-recaptcha');
+// Route::get('/ttt', 'url_mapping@red');
+Route::post('/api', 'url_mapping@creat_url')->Middleware('g-recaptcha');
 Route::post('/img_api', 'url_mapping@img_creat')->Middleware('g-recaptcha');
 Route::get('/db', function () {
     return DB::table('mapping')->get();
@@ -29,6 +30,7 @@ Route::get('/', function () {
 });
 Route::get('/{url}', 'url_mapping@redirect');
 Route::post('/{url}', 'url_mapping@redirect');
+
 
 // Route::get('/api/{url}', 'url_mapping@is_in_db');
 

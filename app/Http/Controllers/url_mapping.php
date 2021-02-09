@@ -6,60 +6,15 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 use Intervention\Image\Facades\Image;
+
+use Redis;
 use Validator;
 use Storage;
 
 class url_mapping extends Controller
 {
-    //
-    public function redirect(Request $request)
+    public function check_url(Request $request)
     {
-
-        $url = $request->url;
-        $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-        if ($find_url != NULL) {
-            if ($find_url->type === 'url') { // if is url redirecr
-                return redirect($find_url->org_url, 301
-                    // , ['custom-header' => 'custom value']
-                );
-            } else if ($find_url->type === 'img' && is_null($find_url->password) && $request->isMethod('get')) { //if is img and no password set
-                $file_extension = $find_url->extension;
-                $filename = $find_url->file_name . "." . $file_extension;
-                $contents = Storage::get($filename);
-                $base64_data = base64_encode($contents);
-                return view(
-                    'img_password',
-                    [
-                        'img_data' => $base64_data,
-                        'summit_disyplay' => 'd-none',
-                    ]
-                )->render();
-                // return base64_encode($contents);
-            } else if ($find_url->type === 'img' && $find_url->password  === $request->password && $request->isMethod('post')) { // if is img and password correct
-                $file_extension = $find_url->extension;
-                $filename = $find_url->file_name . "." . $file_extension;
-                $contents = Storage::get($filename);
-                $base64_data = base64_encode($contents);
-                return $base64_data;
-            } else if ($find_url->type === 'img' && $find_url->password  != $request->password && $request->isMethod('post')) {
-                return 'password error';
-            } else if ($find_url->type === 'img') { //if is img and have to check password
-                return view(
-                    'img_password',
-                    [
-                        'summit_disyplay' => 'input password',
-                    ]
-                )->render();
-            }
-        } else {
-            return redirect('/', 301
-                // , ['custom-header' => 'custom value']
-            );
-        }
-    }
-    public function creat(Request $request)
-    {
-
         if (is_null($request->url)) {                 //avoid url is null 
             return (array('result' => 'url_empty'));
         }
@@ -68,19 +23,125 @@ class url_mapping extends Controller
         ]);
         if ($check->fails()) {
             return (array('result' => 'url_error'));
-        } else {
-            $org_url = $request->url;
+        }
+        return 1;
+    }
+    public function save_to_redis($hash, $url)
+    {
+        $redis = Redis::connection();
+        $redis->set($hash, $url);
+        $redis->set($url, $hash);
 
-            $to_hash = $org_url . "Sa1t";
-            $hash_url = sha1($to_hash);
-            $hash_url = substr($hash_url, 0, 5);
-            // $date = new DateTime();
-            // $date= $date->format('Y-m-d H:i:s');
+        // $redis->hmset($url,array('hash'=>$hash,"url"=>$url));
+    }
+    public function is_in_redis($val) // hash or url both
+    {
+        $redis = Redis::connection();
+        $res = $redis->get($val);
+        if ($res != NULL) {
+            return $res;
+        } else {
+            return NULL;
+        }
+    }
+    // public function red(Request $request)
+    // {
+    //     $redis = Redis::connection();
+    //     $val = $redis->hmget($url, array('hash', ""));
+    //     if ($val) {
+    //         return array("res" => "0");
+    //     } else {
+    //         return array("res" => NULL);
+    //     }
+    // }
+    //==============================================================
+    public function redirect(Request $request)
+    {
+
+        $url = $request->url;
+        $redis_val = $this->is_in_redis($url);
+        if ($redis_val !== NULL) {
+            return redirect($redis_val);
+        } else{
+            $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+            if ($find_url != NULL) {
+                if ($find_url->type === 'url') { // if is url redirecr
+                    $this->save_to_redis($url, $find_url->org_url);
+                    return redirect($find_url->org_url, 301
+                        // , ['custom-header' => 'custom value']
+                    );
+                } else if ($find_url->type === 'img' && is_null($find_url->password) && $request->isMethod('get')) { //if is img and no password set
+                    $file_extension = $find_url->extension;
+                    $filename = $find_url->file_name . "." . $file_extension;
+                    $contents = Storage::get($filename);
+                    $base64_data = base64_encode($contents);
+                    return view(
+                        'img_password',
+                        [
+                            'img_data' => $base64_data,
+                            'summit_disyplay' => 'd-none',
+                        ]
+                    )->render();
+                    // return base64_encode($contents);
+                } else if ($find_url->type === 'img' && $find_url->password  === $request->password && $request->isMethod('post')) { // if is img and password correct
+                    $file_extension = $find_url->extension;
+                    $filename = $find_url->file_name . "." . $file_extension;
+                    $contents = Storage::get($filename);
+                    $base64_data = base64_encode($contents);
+                    return $base64_data;
+                } else if ($find_url->type === 'img' && $find_url->password  != $request->password && $request->isMethod('post')) {
+                    return 'password error';
+                } else if ($find_url->type === 'img') { //if is img and have to check password
+                    return view(
+                        'img_password',
+                        [
+                            'summit_disyplay' => 'input password',
+                        ]
+                    )->render();
+                }
+            } else {
+                return redirect('/', 301
+                    // , ['custom-header' => 'custom value']
+                );
+            }
+
+        }
+       
+    }
+    public function creat_url(Request $request)
+    {
+        $val=$this->check_url($request);
+        if(1!=$val)
+        {
+            return $val;
+        }
+        
+        // if (is_null($request->url)) {                 //avoid url is null 
+        //     return (array('result' => 'url_empty'));
+        // }
+        // $check = Validator::make($request->all(), [
+        //     'url' => 'url'
+        // ]);
+        // if ($check->fails()) {
+        //     return (array('result' => 'url_error'));
+        // }
+
+        $org_url = $request->url;
+        $to_hash = $org_url . "Sa1t";
+        $hash_url = sha1($to_hash);
+        $hash_url = substr($hash_url, 0, 5);
+        // $date = new DateTime();
+        // $date= $date->format('Y-m-d H:i:s');
+        $redis_val = $this->is_in_redis($hash_url);
+        if ($redis_val != NULL) {
+            return (array('org' => urlencode($org_url), 'result' => $hash_url));
+        } else {
             $find = DB::table('mapping')->where('redirect_url', (string)$hash_url)->first();
             if ($find != NULL) {
+                $this->save_to_redis($hash_url, $org_url);
                 return (array('org' => urlencode($org_url), 'result' => $hash_url));
             } else {
-
+                $this->save_to_redis($hash_url, $org_url);
                 DB::table('mapping')->insert(
                     [
                         'org_url' => (string) $org_url,
