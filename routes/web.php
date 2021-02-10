@@ -17,13 +17,17 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/ttt', 'url_mapping@red');
 Route::post('/api', 'url_mapping@creat_url')->Middleware('g-recaptcha');
 Route::post('/img_api', 'url_mapping@img_creat')->Middleware('g-recaptcha');
-Route::get('/db', function () {
+Route::get('/db1', function () {
     return DB::table('mapping')->get();
 });
-
+Route::get('/db2', function () {
+    return DB::table('users')->get();
+});
 Route::get('/img', function () {
     return view('img_password');
 });
+
+
 Route::get('/', function () {
     // return view('welcome');
     return view('home');
@@ -42,20 +46,10 @@ Route::post('/{url}', 'url_mapping@redirect');
 // });
 
 
-
-
-// Route::get('/r', function () {
-
-//     $array = array('foo' => 'aa', 'a' => 'bar');
-
-//     // 返回的就是 json 响应
-//     return $array;
-// });
-
-
-
-
 // // sudo apt install php-pgsql
 // Route::get('/in', function () {
 //     DB::insert('insert into tab(a) values(?)', ['44']);
 // });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

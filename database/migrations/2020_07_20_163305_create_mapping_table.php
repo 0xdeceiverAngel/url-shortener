@@ -23,6 +23,7 @@ class CreateMappingTable extends Migration
             $table->text('password')->default(NULL)->nullable($value = true);
             $table->text('extension')->default(NULL)->nullable($value = true);
             $table->text('type')->default(NULL)->nullable($value = true);
+            $table->text('owner')->default(NULL)->nullable($value = true);
 
         });
     }
