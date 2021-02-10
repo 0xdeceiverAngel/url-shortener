@@ -1,5 +1,5 @@
 <?php
-
+// use App\Http\Middleware\check_is_login; already set in kernel.php
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +26,10 @@ Route::get('/db2', function () {
 Route::get('/img', function () {
     return view('img_password');
 });
+Route::get('login',  'LoginCon@show');
+Route::post('login', 'LoginCon@login');
+Route::get('logout', 'LoginCon@logout');
+Route::get('info','LoginCon@info')->Middleware('check_is_login');
 
 
 Route::get('/', function () {
@@ -50,6 +54,6 @@ Route::post('/{url}', 'url_mapping@redirect');
 // Route::get('/in', function () {
 //     DB::insert('insert into tab(a) values(?)', ['44']);
 // });
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -31,7 +31,7 @@ $(document).ready(function() {
                         } else {
                             // alert('url error');
                             $('.modal_error').html(data.result);
-                            $('.modal').modal('show')
+                            $('.modal_error').modal('show')
                         }
                     }
                 );
@@ -120,4 +120,12 @@ $(document).ready(function() {
             });
         });
     });
+
+    $('.login_a').click(function() {
+        $('.login_modal').modal('show')
+    });
+
+
+
+
 });

@@ -23,26 +23,30 @@
 <body>
     <div class="mynavbar ">
         <div class="container ">
-            <nav class="navbar navbar-expand-lg  navbar-light" style="background-color:white;">
-                <a class="" href="#">
-                    <img src="https://img.icons8.com/material-outlined/48/000000/cloud-link.png" /> name
-                    <!-- <img src="https://fakeimg.pl/30x30/" alt=""> Name -->
-                </a>
-                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#">Name</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button> -->
-                <!-- <div class="collapse navbar-collapse" id="navbarNav"> -->
-                <!-- <ul class="navbar-nav"> -->
-                <!-- <li class="nav-item active"> -->
-                <a class="nav-link" href="#">About us
-                    <!-- <span class="sr-only">(current)</span> -->
-                </a>
-                <!-- </li> -->
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About us</a>
+                        </li>
+                        <!-- <li class="nav-item"> -->
+                        <!-- <a class="nav-link" href="#">Pricing</a> -->
+                        <!-- </li> -->
+                    </ul>
+                    <span class="navbar-text login_a">
+                        <a href="#">Login</a>
+                    </span>
+                </div>
+            </nav>
 
-                <!-- </ul> -->
         </div>
-        </nav>
-    </div>
     </div>
 
     <div class="jumbotron jumbotron-fluid">
@@ -87,26 +91,26 @@
 
             <div class="tab-pane fade" id="pills-img" role="tabpanel" aria-labelledby="pills-img-tab">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            <div class="custom-file">
-                                <input type="file" accept="image/* " class="custom-file-input img_upload" id="inputGroupFile02 ">
-                                <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose
-                                    file</label>
-                            </div>
+                    <!-- <div class="col-md-6"> -->
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" accept="image/* " class="custom-file-input img_upload" id="inputGroupFile02 ">
+                            <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose
+                                file</label>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control password_input" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary img_send" type="button" id="button-addon2 ">Upload</button>
-                            </div>
+                    <!-- </div> -->
+                    <!-- <div class="col-md-6"> -->
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control password_input" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary img_send" type="button" id="button-addon2 ">Upload</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 
@@ -182,7 +186,7 @@
 
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -222,7 +226,38 @@
         </div>
     </div>
 
-
+    <div class="modal fade login_modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="login" method="POST">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
