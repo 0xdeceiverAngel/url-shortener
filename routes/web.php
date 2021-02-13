@@ -26,8 +26,10 @@ Route::get('/db2', function () {
 Route::get('/img', function () {
     return view('img_password');
 });
+
 Route::get('login',  'LoginCon@show');
 Route::post('login', 'LoginCon@login');
+Route::post('register', 'LoginCon@register');
 Route::get('logout', 'LoginCon@logout');
 Route::get('info','LoginCon@info')->Middleware('check_is_login');
 

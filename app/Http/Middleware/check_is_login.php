@@ -17,12 +17,14 @@ class check_is_login
      */
     public function handle($request, Closure $next)
     {
-        if(!Auth::check() or !Auth::viaRemember())
-        {
-            return "no auth";
-            // return redirect('/',301);
-        }
         
-        return $next($request);
+        if (Auth::check() or Auth::viaRemember() ) {
+                return $next($request);
+        }
+
+        if (!Auth::check() or !Auth::viaRemember()) {
+            // return response("no auth");
+            return redirect('/',301);
+        }
     }
 }
