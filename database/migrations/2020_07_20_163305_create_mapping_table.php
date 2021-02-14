@@ -16,7 +16,7 @@ class CreateMappingTable extends Migration
         Schema::create('mapping', function (Blueprint $table) {
             $table->text('org_url')->default(NULL)->nullable($value = true);
             $table->text('redirect_url')->default(NULL)->nullable($value = true);
-            $table->unsignedInteger('redirect_times')->default('0')->nullable($value = true);
+            $table->unsignedInteger('redirect_times')->default('0');
             $table->dateTimeTz('creat_time')->default(NULL)->nullable($value = true);
             $table->dateTimeTz('last_time_use')->default(NULL)->nullable($value = true);
             $table->text('file_name')->default(NULL)->nullable($value = true);
