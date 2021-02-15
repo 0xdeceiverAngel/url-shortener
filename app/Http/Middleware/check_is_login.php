@@ -19,12 +19,17 @@ class check_is_login
     {
         
         if (Auth::check() or Auth::viaRemember() ) {
+                // $request->is_login=1;
+                $request->owner=Auth::user()->id;
                 return $next($request);
         }
 
-        if (!Auth::check() or !Auth::viaRemember()) {
+        if (!Auth::check() and !Auth::viaRemember()) {
             // return response("no auth");
-            return redirect('/',301);
+            // return redirect('/',301);
+            // $request->is_login = 0;
+            $request->owner = null;
+            return $next($request);
         }
     }
 }

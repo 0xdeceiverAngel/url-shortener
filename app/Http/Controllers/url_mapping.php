@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 use Intervention\Image\Facades\Image;
-
+use DateTime;
+use DateTimeZone;
 use Redis;
 use Validator;
 use Storage;
-
 class url_mapping extends Controller
 {
+    
     public function check_url(Request $request)
     {
         if (is_null($request->url)) {                 //avoid url is null 
@@ -57,16 +58,28 @@ class url_mapping extends Controller
     //==============================================================
     public function redirect(Request $request)
     {
-
+        
+        $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $url = $request->url;
         $redis_val = $this->is_in_redis($url);
         if ($redis_val !== NULL) {
-            return redirect($redis_val);
-        } else{
             $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+            $red_time= $find_url->redirect_times;
+            DB::table('mapping')->where('redirect_url', $url)->update(
+                ['redirect_times' => ++$red_time, 'last_time_use' => $date]
+            );
+            return redirect($redis_val);
+        } else {
+            $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+            $red_time = $find_url->redirect_times;
             if ($find_url != NULL) {
-                if ($find_url->type === 'url') { // if is url redirecr
+                if ($find_url->type === 'url') { // if is url 
                     $this->save_to_redis($url, $find_url->org_url);
+                    $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+                    $red_time = $find_url->redirect_times;
+                    DB::table('mapping')->where('redirect_url', $url)->update(
+                        ['redirect_times' => ++$red_time, 'last_time_use' => $date]
+                    );
                     return redirect($find_url->org_url, 301
                         // , ['custom-header' => 'custom value']
                     );
@@ -88,6 +101,9 @@ class url_mapping extends Controller
                     $filename = $find_url->file_name . "." . $file_extension;
                     $contents = Storage::get($filename);
                     $base64_data = base64_encode($contents);
+                    DB::table('mapping')->where('redirect_url', $url)->update(
+                        ['last_time_use' => $date]
+                    );
                     return $base64_data;
                 } else if ($find_url->type === 'img' && $find_url->password  != $request->password && $request->isMethod('post')) {
                     return 'password error';
@@ -104,34 +120,20 @@ class url_mapping extends Controller
                     // , ['custom-header' => 'custom value']
                 );
             }
-
         }
-       
     }
     public function creat_url(Request $request)
     {
-        $val=$this->check_url($request);
-        if(1!=$val)
-        {
+        $val = $this->check_url($request);
+        if (1 != $val) {
             return $val;
         }
-        
-        // if (is_null($request->url)) {                 //avoid url is null 
-        //     return (array('result' => 'url_empty'));
-        // }
-        // $check = Validator::make($request->all(), [
-        //     'url' => 'url'
-        // ]);
-        // if ($check->fails()) {
-        //     return (array('result' => 'url_error'));
-        // }
 
+        $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $org_url = $request->url;
         $to_hash = $org_url . "Sa1t";
         $hash_url = sha1($to_hash);
         $hash_url = substr($hash_url, 0, 5);
-        // $date = new DateTime();
-        // $date= $date->format('Y-m-d H:i:s');
         $redis_val = $this->is_in_redis($hash_url);
         if ($redis_val != NULL) {
             return (array('org' => urlencode($org_url), 'result' => $hash_url));
@@ -146,18 +148,17 @@ class url_mapping extends Controller
                     [
                         'org_url' => (string) $org_url,
                         'redirect_url' => (string) $hash_url,
-                        'type' => 'url'
-                    ]
-                    // 'redirect_time'=>'0',
-                    // 'creat_time'=>$date]
-                    // 'last_time_use'=>NULL]
-                );
+                        'type' => 'url',
+                        'creat_time' => $date->format('Y-m-d H:i:s'),
+                        'owner' => $request->owner
+                    ]);
                 return (array('org' => urlencode($org_url), 'result' => $hash_url));
             }
         }
     }
     public function img_creat(Request $request)
     {
+        $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $check = Validator::make($request->all(), [
             'file' => 'Image'
         ]);
@@ -179,7 +180,10 @@ class url_mapping extends Controller
                     'redirect_url' => (string) $ranom_file_name,
                     'extension' => (string) $file_extension,
                     'password' => (string) $password,
-                    'type' => 'img'
+                    'type' => 'img',
+                    'creat_time' => $date->format('Y-m-d H:i:s'),
+                    'owner' => $request->owner
+
                 ]
             );
 

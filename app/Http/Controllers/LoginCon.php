@@ -18,7 +18,7 @@ class LoginCon extends Controller
             'password' => Hash::make($request->password)
         ]);
         AUTH::login($user,1);
-        return redirect()->intended('info');
+        return redirect()->intended('dashboard');
 
         // return response('success');
     }
@@ -44,7 +44,7 @@ class LoginCon extends Controller
         {
             // return redirect('/',301);
             // return 'ok';
-            return redirect()->intended('info');
+            return view('info');
         }
         else
         {
@@ -59,8 +59,25 @@ class LoginCon extends Controller
         Auth::logout();
         return redirect('/',301);
     }
-    public function info()
+    public function dashboard(Request $request)
     {
-        return view('info');
+        
+        // $res=DB::table('mapping')->where('owner',$user);
+
+                    return view('info');
+
     }
-}
+    public function home(Request $request)
+    {
+        // if($request->is_login===1)
+        // {
+            // $username = Auth::user();
+            // return view('home',['username'=>$username]);
+        // }
+        // else
+        // {
+            return view('home');
+        // }
+    }
+}   
+

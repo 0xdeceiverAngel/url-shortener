@@ -33,16 +33,33 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                         </li>
+                        @auth
                         <li class="nav-item">
                             <a class="nav-link" href="dashboard">Dashboard</a>
                         </li>
+                        @endauth
                         <!-- <li class="nav-item"> -->
                         <!-- <a class="nav-link" href="#">Pricing</a> -->
                         <!-- </li> -->
                     </ul>
+                    @auth
+                    <span class="navbar user">
+                        <p> {{AUTH::user()->username}}</p>
+                    </span>
+                    <span class="navbar ">
+                        <a href="logout">Logout</a>
+                    </span>
+                    @endauth
+
+                    @guest
+                    <span class="navbar ">
+                        <p>Guset</p>
+                    </span>
                     <span class="navbar-text login_a">
                         <a href="#">Login/Register</a>
                     </span>
+                    @endguest
+
                 </div>
             </nav>
 
@@ -82,7 +99,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control url_input" placeholder="https://" aria-label="Recipient's username" aria-describedby="button-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary url_send" type="button" id="button-addon2 ">Button</button>
+                        <button class="btn btn-outline-secondary url_send" type="button" id="button-addon2 ">Shorten</button>
                     </div>
                 </div>
             </div>
@@ -162,7 +179,7 @@
                     <div class="col-md-6 text-left ">
                         <h4>contact us
                         </h4>
-                        <p>E-mail:admin@gmail.com</p>
+                        <p>E-mail:31663805+0xdeciverAngel@users.noreply.github.com</p>
                     </div>
                 </div>
             </div>
