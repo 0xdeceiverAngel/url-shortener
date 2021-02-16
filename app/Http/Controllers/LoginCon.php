@@ -7,6 +7,7 @@ use Auth;
 use Validator;
 use App\User;
 use Hash;
+use DB;
 class LoginCon extends Controller
 {
 
@@ -61,11 +62,13 @@ class LoginCon extends Controller
     }
     public function dashboard(Request $request)
     {
-        
-        // $res=DB::table('mapping')->where('owner',$user);
-
-                    return view('info');
-
+        if($request->owner==NULL)
+        {
+            return redirect('/');
+        }
+        $res=DB::table('mapping')->where('owner',$request->owner)->get();
+        // return response($res);
+        return view('dashboard',['user'=>$res]);
     }
     public function home(Request $request)
     {
