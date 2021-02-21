@@ -131,7 +131,7 @@ class url_mapping extends Controller
 
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $org_url = $request->url;
-        $to_hash = $org_url . "Sa1t";
+        $to_hash = $org_url . "Sa1t". bin2hex(random_bytes(6));
         $hash_url = sha1($to_hash);
         $hash_url = substr($hash_url, 0, 5);
         $redis_val = $this->is_in_redis($hash_url);
