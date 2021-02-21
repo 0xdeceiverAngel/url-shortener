@@ -24,14 +24,14 @@
     <div class="mynavbar ">
         <div class="container ">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="#">Name</a>
+                <h3>Url shorter</h3>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                         </li>
                         @auth
                         <li class="nav-item">
@@ -95,6 +95,25 @@
                     </tbody>
 
                 </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade change_modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">New Password</label>
+                        <input type="password" class="form-control pw_input" id="exampleInputPassword1" placeholder="Enter password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary change_pw_btn">Change</button>
+                </div>
+                <div class="modal-footer">
+
+                </div>
             </div>
         </div>
     </div>

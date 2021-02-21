@@ -17,7 +17,7 @@ class url_manage extends Controller
             if((string)$res->owner== (string)$request->owner)
             {
                 DB::table('mapping')->where('redirect_url', $request->url)->delete();
-                return response('sucess');
+                return response('success');
             }
             else
             {
@@ -29,5 +29,26 @@ class url_manage extends Controller
             return response('no auth');
         }
         
+    }
+    public function change_pw(Request $request)
+    {
+        if($request->pw=='')
+        {
+            return response('no password');
+        }
+        $pw= $request->pw;
+        if ($request->owner != null) {
+            $res = DB::table('mapping')->where('redirect_url', $request->url)->first();
+            if ((string)$res->owner == (string)$request->owner) {
+                DB::table('mapping')->where('redirect_url', $request->url)->update(
+                    ['password'=>$pw]
+                );
+                return response('success');
+            } else {
+                return response('try to change others url');
+            }
+        } else {
+            return response('no auth');
+        }
     }
 }

@@ -26,6 +26,8 @@ Route::get('/img', function () {
 });
 
 Route::post('delete','url_manage@delete_url')->Middleware('check_is_login');
+Route::post('change_pw', 'url_manage@change_pw')->Middleware('check_is_login');
+
 Route::post('login', 'LoginCon@login');
 Route::post('register', 'LoginCon@register');
 Route::get('logout', 'LoginCon@logout');
@@ -33,3 +35,5 @@ Route::get('dashboard', 'LoginCon@dashboard')->Middleware('check_is_login');
 Route::get('/','LoginCon@home')->Middleware('check_is_login');
 Route::get('/{url}', 'url_mapping@redirect');
 Route::post('/{url}', 'url_mapping@redirect');
+
+
