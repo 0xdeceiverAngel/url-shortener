@@ -13,8 +13,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::post('/api', 'url_mapping@creat_url')->Middleware('g-recaptcha')->Middleware('check_is_login');
-Route::post('/img_api', 'url_mapping@img_creat')->Middleware('g-recaptcha')->Middleware('check_is_login');
+
+Route::group(['middleware' => ['g-recaptcha','check_is_login']], function () {
+    Route::post('/api', 'url_mapping@creat_url');
+    Route::post('/img_api', 'url_mapping@img_creat');
+});
+Route::group(['middleware' => ['check_is_login']], function () {
+    Route::get('dashboard', 'LoginCon@dashboard')->Middleware('check_is_login');
+    Route::post('delete', 'url_manage@delete_url')->Middleware('check_is_login');
+    Route::post('change_pw', 'url_manage@change_pw')->Middleware('check_is_login');
+});
+
 Route::get('/db1', function () {
     return DB::table('mapping')->get();
 });
@@ -24,15 +33,18 @@ Route::get('/db2', function () {
 Route::get('/img', function () {
     return view('img_password');
 });
+Route::get('/php', function () {
+    return view('php');
+});
+Route::get('ajax-file-upload-progress-bar', 'ProgressBarUploadFileController@index');
+Route::post('store', 'ProgressBarUploadFileController@store');
 
-Route::post('delete','url_manage@delete_url')->Middleware('check_is_login');
-Route::post('change_pw', 'url_manage@change_pw')->Middleware('check_is_login');
+
 
 Route::post('login', 'LoginCon@login');
 Route::post('register', 'LoginCon@register');
 Route::get('logout', 'LoginCon@logout');
-Route::get('dashboard', 'LoginCon@dashboard')->Middleware('check_is_login');
-Route::get('/','LoginCon@home')->Middleware('check_is_login');
+Route::get('/','LoginCon@home');
 Route::get('/{url}', 'url_mapping@redirect');
 Route::post('/{url}', 'url_mapping@redirect');
 

@@ -24,14 +24,21 @@
 <body>
     <div class="mynavbar">
         <div class="container ">
-            <nav class="navbar navbar-expand-lg  navbar-light" style="background-color:white;">
-                <a class="" href="#">
-                    <img src="https://img.icons8.com/material-outlined/48/000000/cloud-link.png" /> name
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <h3>Url shorter</h3>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
+                        </li>
+                   
+                    </ul>
+                
 
-                    <a class="nav-link" href="#">About us
-
-                    </a>
-
+                </div>
             </nav>
         </div>
     </div>

@@ -4,7 +4,7 @@ http://www.youtube.com/watch?v=ViM7Jy5xI7s
 ## feature
 - use recaptcha to avoid abuse
 - shorten url redirect
-- private image share,can lock with password
+- private image share,lock with password
 ## base on 
 - docker
 - laravel 

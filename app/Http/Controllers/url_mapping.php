@@ -11,9 +11,20 @@ use DateTimeZone;
 use Redis;
 use Validator;
 use Storage;
+
 class url_mapping extends Controller
 {
-    
+    public function check_img_size_and_type(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file' => 'max:500000',
+            'file' => 'Image'
+        ]);
+        if ($validator->fails()) {
+            return (array('result' => 'img_too_large or not_img'));
+        }
+        return 1;
+    }
     public function check_url(Request $request)
     {
         if (is_null($request->url)) {                 //avoid url is null 
@@ -58,13 +69,13 @@ class url_mapping extends Controller
     //==============================================================
     public function redirect(Request $request)
     {
-        
+
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $url = $request->url;
         $redis_val = $this->is_in_redis($url);
         if ($redis_val !== NULL) {
             $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-            $red_time= $find_url->redirect_times;
+            $red_time = $find_url->redirect_times;
             DB::table('mapping')->where('redirect_url', $url)->update(
                 ['redirect_times' => ++$red_time, 'last_time_use' => $date]
             );
@@ -131,7 +142,7 @@ class url_mapping extends Controller
 
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $org_url = $request->url;
-        $to_hash = $org_url . "Sa1t". bin2hex(random_bytes(6));
+        $to_hash = $org_url . "Sa1t" . bin2hex(random_bytes(6));
         $hash_url = sha1($to_hash);
         $hash_url = substr($hash_url, 0, 5);
         $redis_val = $this->is_in_redis($hash_url);
@@ -151,7 +162,8 @@ class url_mapping extends Controller
                         'type' => 'url',
                         'creat_time' => $date->format('Y-m-d H:i:s'),
                         'owner' => $request->owner
-                    ]);
+                    ]
+                );
                 return (array('org' => urlencode($org_url), 'result' => $hash_url));
             }
         }
@@ -159,19 +171,18 @@ class url_mapping extends Controller
     public function img_creat(Request $request)
     {
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
-        $check = Validator::make($request->all(), [
-            'file' => 'Image'
-        ]);
-        if ($check->fails()) {
-            return (array('result' => 'img_error'));
-        } else if (is_null($request->password)) {
+        $val = $this->check_img_size_and_type($request);
+        if (1 != $val) {
+            return $val;
+        }
+        if (is_null($request->password)) {
             return (array('result' => 'must enter password'));
         } else {
             $password = $request->password;
             $file_extension = $request->extension;
             $ranom_file_name = bin2hex(random_bytes(16));
             $ranom_file_name = substr($ranom_file_name, 0, 6);
-
+            
             Storage::put($ranom_file_name . '.' . $file_extension, $request->file('file')->get());
             // return ($ranom_file_name);
             DB::table('mapping')->insert(
