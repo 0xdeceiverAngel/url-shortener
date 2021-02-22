@@ -31,7 +31,7 @@ $(document).ready(function() {
                         } else {
                             // alert('url error');
                             $('.modal_error').html(data.result);
-                            $('.modal_error').modal('show')
+                            $('.modal_error').modal('show');
                         }
                     }
                 );

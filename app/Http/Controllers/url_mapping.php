@@ -11,7 +11,7 @@ use DateTimeZone;
 use Redis;
 use Validator;
 use Storage;
-
+use Auth;
 class url_mapping extends Controller
 {
     public function check_img_size_and_type(Request $request)
@@ -67,70 +67,77 @@ class url_mapping extends Controller
     //     }
     // }
     //==============================================================
+    public function img_pw_verify(Request $request)
+    {
+        $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
+        $url = $request->hash;
+        $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+
+        if ($find_url->type === 'img' && $find_url->password  === $request->password) { // if is img and password correct
+            $file_extension = $find_url->extension;
+            $filename = $find_url->file_name . "." . $file_extension;
+            $contents = Storage::get($filename);
+            $base64_data = base64_encode($contents);
+            DB::table('mapping')->where('redirect_url', $url)->update(
+                ['last_time_use' => $date]
+            );
+            return $base64_data;
+        } else {
+            return response('password error');
+        }
+    }
     public function redirect(Request $request)
     {
 
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
-        $url = $request->url;
-        $redis_val = $this->is_in_redis($url);
-        if ($redis_val !== NULL) {
-            $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-            $red_time = $find_url->redirect_times;
-            DB::table('mapping')->where('redirect_url', $url)->update(
-                ['redirect_times' => ++$red_time, 'last_time_use' => $date]
-            );
-            return redirect($redis_val);
-        } else {
-            $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-            $red_time = $find_url->redirect_times;
-            if ($find_url != NULL) {
-                if ($find_url->type === 'url') { // if is url 
-                    $this->save_to_redis($url, $find_url->org_url);
-                    $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-                    $red_time = $find_url->redirect_times;
-                    DB::table('mapping')->where('redirect_url', $url)->update(
-                        ['redirect_times' => ++$red_time, 'last_time_use' => $date]
-                    );
-                    return redirect($find_url->org_url, 301
-                        // , ['custom-header' => 'custom value']
-                    );
-                } else if ($find_url->type === 'img' && is_null($find_url->password) && $request->isMethod('get')) { //if is img and no password set
-                    $file_extension = $find_url->extension;
-                    $filename = $find_url->file_name . "." . $file_extension;
-                    $contents = Storage::get($filename);
-                    $base64_data = base64_encode($contents);
-                    return view(
-                        'img_password',
-                        [
-                            'img_data' => $base64_data,
-                            'summit_disyplay' => 'd-none',
-                        ]
-                    )->render();
-                    // return base64_encode($contents);
-                } else if ($find_url->type === 'img' && $find_url->password  === $request->password && $request->isMethod('post')) { // if is img and password correct
-                    $file_extension = $find_url->extension;
-                    $filename = $find_url->file_name . "." . $file_extension;
-                    $contents = Storage::get($filename);
-                    $base64_data = base64_encode($contents);
-                    DB::table('mapping')->where('redirect_url', $url)->update(
-                        ['last_time_use' => $date]
-                    );
-                    return $base64_data;
-                } else if ($find_url->type === 'img' && $find_url->password  != $request->password && $request->isMethod('post')) {
-                    return 'password error';
-                } else if ($find_url->type === 'img') { //if is img and have to check password
-                    return view(
-                        'img_password',
-                        [
-                            'summit_disyplay' => 'input password',
-                        ]
-                    )->render();
-                }
-            } else {
-                return redirect('/', 301
+        $url = $request->hash;
+        // $redis_val = $this->is_in_redis($url);
+        // if ($redis_val !== NULL) {
+        //     $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+        //     $red_time = $find_url->redirect_times;
+        //     DB::table('mapping')->where('redirect_url', $url)->update(
+        //         ['redirect_times' => ++$red_time, 'last_time_use' => $date]
+        //     );
+        //     return redirect($redis_val);
+        // } else {
+            
+        $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+        $red_time = $find_url->redirect_times;
+        if ($find_url != NULL) {
+            if ($find_url->type === 'url') { // if is url 
+                // $this->save_to_redis($url, $find_url->org_url);
+                $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
+                $red_time = $find_url->redirect_times;
+                DB::table('mapping')->where('redirect_url', $url)->update(
+                    ['redirect_times' => ++$red_time, 'last_time_use' => $date]
+                );
+                return redirect($find_url->org_url, 301
                     // , ['custom-header' => 'custom value']
                 );
+            } else if ($find_url->type === 'img' && is_null($find_url->password)) { //if is img and no password set
+                $file_extension = $find_url->extension;
+                $filename = $find_url->file_name . "." . $file_extension;
+                $contents = Storage::get($filename);
+                $base64_data = base64_encode($contents);
+                return view(
+                    'img_password',
+                    [
+                        'img_data' => $base64_data,
+                        'summit_disyplay' => 'd-none',
+                    ]
+                )->render();
+            } else if ($find_url->type === 'img') { //if is img and have to check password
+                return view(
+                    'img_password',
+                    [
+                        'summit_disyplay' => 'input password',
+                    ]
+                )->render();
             }
+        } else {
+            return redirect('/', 301
+                // , ['custom-header' => 'custom value']
+            );
         }
     }
     public function creat_url(Request $request)
@@ -161,7 +168,7 @@ class url_mapping extends Controller
                         'redirect_url' => (string) $hash_url,
                         'type' => 'url',
                         'creat_time' => $date->format('Y-m-d H:i:s'),
-                        'owner' => $request->owner
+                        'owner' => Auth::user()->id
                     ]
                 );
                 return (array('org' => urlencode($org_url), 'result' => $hash_url));
@@ -182,7 +189,7 @@ class url_mapping extends Controller
             $file_extension = $request->extension;
             $ranom_file_name = bin2hex(random_bytes(16));
             $ranom_file_name = substr($ranom_file_name, 0, 6);
-            
+
             Storage::put($ranom_file_name . '.' . $file_extension, $request->file('file')->get());
             // return ($ranom_file_name);
             DB::table('mapping')->insert(
@@ -193,7 +200,7 @@ class url_mapping extends Controller
                     'password' => (string) $password,
                     'type' => 'img',
                     'creat_time' => $date->format('Y-m-d H:i:s'),
-                    'owner' => $request->owner
+                    'owner' => Auth::user()->id
 
                 ]
             );

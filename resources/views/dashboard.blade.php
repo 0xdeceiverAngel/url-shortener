@@ -72,6 +72,7 @@
                             <th scope="col">redirect_times</th>
                             <th scope="col">creat_time</th>
                             <th scope="col">last_time_use</th>
+                            <th scope="col">type</th>
                             <th scope="col">delete url</th>
                             <th scope="col">change password</th>
                         </tr>
@@ -86,6 +87,7 @@
                             <td>{{$u->redirect_times}}</td>
                             <td>{{$u->creat_time}}</td>
                             <td>{{$u->last_time_use}}</td>
+                            <td>{{$u->type}}</td>
                             <td><button class="btn btn-primary del_btn" type="submit" url="{{$u->redirect_url}}">Delete</button></td>
                             @if($u->type=='img')
                             <td><button class="btn btn-primary change_btn" type="submit" url="{{$u->redirect_url}}">Change </button></td>

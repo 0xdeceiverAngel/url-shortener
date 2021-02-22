@@ -44,21 +44,17 @@
                     </ul>
                     @auth
                     <span class="navbar user">
-                        <p> {{AUTH::user()->username}}</p>
+                        <p> {{AUTH()->user()->username}}</p>
                     </span>
                     <span class="navbar ">
                         <a href="logout">Logout</a>
-                    </span>
-                    @endauth
-
-                    @guest
+                    </span> @endauth @guest
                     <span class="navbar ">
                         <p>Guset</p>
                     </span>
                     <span class="navbar-text login_a">
                         <a href="#">Login/Register</a>
-                    </span>
-                    @endguest
+                    </span> @endguest
 
                 </div>
             </nav>
@@ -308,8 +304,18 @@
         </div>
     </div>
 
+    <div class="toast" id="myToast" style="position: absolute; top: 0; right: 0;" data-delay="5000">
+        <div class="toast-header">
+            <strong class="mr-auto"><i class="fa fa-grav"></i>Message</strong>
 
-
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            <div>error format</div>
+        </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -321,7 +327,7 @@
 
 </html>
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
-<script src="home.js"></script>
+<script src="index.js"></script>
 </body>
 
 </html>
