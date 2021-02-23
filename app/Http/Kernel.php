@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'g-recaptcha'=>\App\Http\Middleware\recaptcha_verify::class,
         'check_is_login'=> \App\Http\Middleware\check_is_login::class,
+        'check_url_cache'=>\App\Http\Middleware\check_url_cache::class,
     ];
 }

@@ -12,6 +12,7 @@ use Redis;
 use Validator;
 use Storage;
 use Auth;
+
 class url_mapping extends Controller
 {
     public function check_img_size_and_type(Request $request)
@@ -38,13 +39,20 @@ class url_mapping extends Controller
         }
         return 1;
     }
-    public function save_to_redis($hash, $url)
+    public function save_to_redis($hash, $url,$type,$red_time,$last_t_u,$pw,$f_n,$ex)
     {
         $redis = Redis::connection();
-        $redis->set($hash, $url);
-        $redis->set($url, $hash);
-
-        // $redis->hmset($url,array('hash'=>$hash,"url"=>$url));
+        // $redis->set($hash, $url);
+        // $redis->set($url, $hash);
+        $redis->hmset($hash,array("url"=>$url??"",
+                                  "type"=>$type??"",
+                                  "redirect_times"=>$red_time??"",
+                                  "last_time_use"=>$last_t_u??"",
+                                  "password"=>$pw??"",
+                                  "file_name"=>$f_n??"",
+                                  "extension"=>$ex??""
+                                
+                                ));
     }
     public function is_in_redis($val) // hash or url both
     {
@@ -55,6 +63,11 @@ class url_mapping extends Controller
         } else {
             return NULL;
         }
+    }
+    public function get_red_times($hash)
+    {
+        $redis = Redis::connection();
+        return($redis->hget($hash, 'redirect_times'));
     }
     // public function red(Request $request)
     // {
@@ -100,7 +113,7 @@ class url_mapping extends Controller
         //     );
         //     return redirect($redis_val);
         // } else {
-            
+
         $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
         $red_time = $find_url->redirect_times;
         if ($find_url != NULL) {
@@ -152,28 +165,17 @@ class url_mapping extends Controller
         $to_hash = $org_url . "Sa1t" . bin2hex(random_bytes(6));
         $hash_url = sha1($to_hash);
         $hash_url = substr($hash_url, 0, 5);
-        $redis_val = $this->is_in_redis($hash_url);
-        if ($redis_val != NULL) {
-            return (array('org' => urlencode($org_url), 'result' => $hash_url));
-        } else {
-            $find = DB::table('mapping')->where('redirect_url', (string)$hash_url)->first();
-            if ($find != NULL) {
-                $this->save_to_redis($hash_url, $org_url);
-                return (array('org' => urlencode($org_url), 'result' => $hash_url));
-            } else {
-                $this->save_to_redis($hash_url, $org_url);
-                DB::table('mapping')->insert(
-                    [
-                        'org_url' => (string) $org_url,
-                        'redirect_url' => (string) $hash_url,
-                        'type' => 'url',
-                        'creat_time' => $date->format('Y-m-d H:i:s'),
-                        'owner' => Auth::user()->id
-                    ]
-                );
-                return (array('org' => urlencode($org_url), 'result' => $hash_url));
-            }
-        }
+        $this->save_to_redis($hash_url, $org_url,"url",0, $date->format('Y-m-d H:i:s'),"","","");
+        DB::table('mapping')->insert(
+            [
+                'org_url' => (string) $org_url,
+                'redirect_url' => (string) $hash_url,
+                'type' => 'url',
+                'creat_time' => $date->format('Y-m-d H:i:s'),
+                'owner' => Auth::user()->id??""
+            ]
+        );
+        return (array('org' => urlencode($org_url), 'result' => $hash_url));
     }
     public function img_creat(Request $request)
     {
@@ -191,7 +193,7 @@ class url_mapping extends Controller
             $ranom_file_name = substr($ranom_file_name, 0, 6);
 
             Storage::put($ranom_file_name . '.' . $file_extension, $request->file('file')->get());
-            // return ($ranom_file_name);
+            $this->save_to_redis($ranom_file_name, '', "img", 0, $date->format('Y-m-d H:i:s'), $password, $ranom_file_name, $file_extension);
             DB::table('mapping')->insert(
                 [
                     'file_name' => (string) $ranom_file_name,

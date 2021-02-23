@@ -19,9 +19,9 @@ Route::group(['middleware' => ['g-recaptcha']], function () {
     Route::post('/img_api', 'url_mapping@img_creat');
 });
 Route::group(['middleware' => ['check_is_login']], function () {
-    Route::get('dashboard', 'LoginCon@dashboard')->Middleware('check_is_login');
-    Route::post('delete', 'url_manage@delete_url')->Middleware('check_is_login');
-    Route::post('change_pw', 'url_manage@change_pw')->Middleware('check_is_login');
+    Route::get('dashboard', 'LoginCon@dashboard');//find all save to redis
+    Route::post('delete', 'url_manage@delete_url');
+    Route::post('change_pw', 'url_manage@change_pw');
 });
 
 Route::get('/db1', function () {
@@ -43,7 +43,7 @@ Route::post('login', 'LoginCon@login');
 Route::post('register', 'LoginCon@register');
 Route::get('logout', 'LoginCon@logout');
 Route::get('/','LoginCon@index');
-Route::get('/{hash}', 'url_mapping@redirect');
+Route::get('/{hash}', 'url_mapping@redirect')->middleware('check_url_cache');
 Route::post('/{hash}/verify', 'url_mapping@img_pw_verify');
 
 
