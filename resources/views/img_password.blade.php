@@ -34,9 +34,9 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
                         </li>
-                   
+
                     </ul>
-                
+
 
                 </div>
             </nav>
@@ -61,37 +61,39 @@
     <div class="img_aera">
         <div class="container">
             <div class="row justify-content-center">
-                <img src="data:image/png;base64,{{$img_data??''}}" class="img_show" alt="">
+                <img src="data:image/png;base64,{{$img_data??''}}" class="img_show" alt="" style="width:75%">
             </div>
         </div>
     </div>
 
-    <div class=" footer fixed-bottom ">
-        <div class=" jumbotron ">
-            <div class=" container ">
-                <div class=" row ">
-                    <div class=" col-md-6 ">
-                        <!-- <img src=" https://fakeimg.pl/30x30/ " alt=" "> Name -->
-                        <a class=" navbar-brand " href=" # ">
-                            <img src=" https://img.icons8.com/material-outlined/48/000000/cloud-link.png " /> Name
-                        </a>
-
-                        <p>describe</p>
+    <div class="footer fixed-bottom">
+        <div class="jumbotron ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- <img src="https://fakeimg.pl/30x30/" alt=""> Name -->
+                        <!-- <a class="navbar-brand" href="#"> -->
+                        <!-- <img src="https://img.icons8.com/material-outlined/48/000000/cloud-link.png" /> Name -->
+                        <!-- </a> -->
+                        <h3>Url shorter</h3>
+                        <p>Make url easier</p>
                         <p>
                             &copy;0xdeciverAngel
                         </p>
                     </div>
-                    <!-- <div class=" col-md-4 text-left ">
+                    <!-- <div class="col-md-4 text-left">
                         <h6>common questions</h6>
                     </div> -->
-                    <div class=" col-md-6 text-left ">
+                    <div class="col-md-6 text-left ">
                         <h4>contact us
                         </h4>
-                        <p>E-mail:admin@gmail.com</p>
+                        <p>E-mail:31663805+0xdeciverAngel@users.noreply.github.com</p>
                     </div>
                 </div>
             </div>
         </div>
+
+    </div>
 
     </div>
     <!-- ---------------------------------------- -->

@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['g-recaptcha','check_is_login']], function () {
+Route::group(['middleware' => ['g-recaptcha']], function () {
     Route::post('/api', 'url_mapping@creat_url');
     Route::post('/img_api', 'url_mapping@img_creat');
+    Route::post('/{hash}/verify', 'url_mapping@img_pw_verify');
 });
 Route::group(['middleware' => ['check_is_login']], function () {
-    Route::get('dashboard', 'LoginCon@dashboard')->Middleware('check_is_login');
-    Route::post('delete', 'url_manage@delete_url')->Middleware('check_is_login');
-    Route::post('change_pw', 'url_manage@change_pw')->Middleware('check_is_login');
+    Route::get('dashboard', 'LoginCon@dashboard');//find all save to redis
+    Route::post('delete', 'url_manage@delete_url')->middleware('check_url_verify');
+    Route::post('change_pw', 'url_manage@change_pw')->middleware('check_url_verify');
 });
 
 Route::get('/db1', function () {
@@ -30,12 +31,10 @@ Route::get('/db1', function () {
 Route::get('/db2', function () {
     return DB::table('users')->get();
 });
-Route::get('/img', function () {
-    return view('img_password');
-});
 Route::get('/php', function () {
     return view('php');
 });
+
 Route::get('ajax-file-upload-progress-bar', 'ProgressBarUploadFileController@index');
 Route::post('store', 'ProgressBarUploadFileController@store');
 
@@ -44,8 +43,7 @@ Route::post('store', 'ProgressBarUploadFileController@store');
 Route::post('login', 'LoginCon@login');
 Route::post('register', 'LoginCon@register');
 Route::get('logout', 'LoginCon@logout');
-Route::get('/','LoginCon@home');
-Route::get('/{url}', 'url_mapping@redirect');
-Route::post('/{url}', 'url_mapping@redirect');
+Route::get('/','LoginCon@index');
+Route::get('/{hash}', 'url_mapping@redirect')->middleware('check_url_cache');
 
 

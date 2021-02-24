@@ -72,6 +72,7 @@
                             <th scope="col">redirect_times</th>
                             <th scope="col">creat_time</th>
                             <th scope="col">last_time_use</th>
+                            <th scope="col">type</th>
                             <th scope="col">delete url</th>
                             <th scope="col">change password</th>
                         </tr>
@@ -86,6 +87,7 @@
                             <td>{{$u->redirect_times}}</td>
                             <td>{{$u->creat_time}}</td>
                             <td>{{$u->last_time_use}}</td>
+                            <td>{{$u->type}}</td>
                             <td><button class="btn btn-primary del_btn" type="submit" url="{{$u->redirect_url}}">Delete</button></td>
                             @if($u->type=='img')
                             <td><button class="btn btn-primary change_btn" type="submit" url="{{$u->redirect_url}}">Change </button></td>
@@ -98,6 +100,34 @@
             </div>
         </div>
     </div>
+    <div class=" footer ">
+        <div class=" jumbotron ">
+            <div class=" container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <!-- <img src="https://fakeimg.pl/30x30/" alt=""> Name -->
+                                            <!-- <a class="navbar-brand" href="#"> -->
+                                            <!-- <img src="https://img.icons8.com/material-outlined/48/000000/cloud-link.png" /> Name -->
+                                            <!-- </a> -->
+                                            <h3>Url shorter</h3>
+                                            <p>Make url easier</p>
+                                            <p>
+                                                &copy;0xdeciverAngel
+                                            </p>
+                                        </div>
+                                        <!-- <div class="col-md-4 text-left">
+                        <h6>common questions</h6>
+                    </div> -->
+                                        <div class="col-md-6 text-left ">
+                                            <h4>contact us
+                                            </h4>
+                                            <p>E-mail:31663805+0xdeciverAngel@users.noreply.github.com</p>
+                                        </div>
+                                    </div>
+            </div>
+        </div>
+
+    </div>
     <div class="modal fade change_modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -109,7 +139,7 @@
                         <label for="exampleInputPassword1">New Password</label>
                         <input type="password" class="form-control pw_input" id="exampleInputPassword1" placeholder="Enter password" name="password">
                     </div>
-                    <button type="submit" class="btn btn-primary change_pw_btn">Change</button>
+                    <button type="submit" class=" btn btn-primary change_pw_btn">Change</button>
                 </div>
                 <div class="modal-footer">
 

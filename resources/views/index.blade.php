@@ -44,21 +44,17 @@
                     </ul>
                     @auth
                     <span class="navbar user">
-                        <p> {{AUTH::user()->username}}</p>
+                        <p> {{AUTH()->user()->username}}</p>
                     </span>
                     <span class="navbar ">
                         <a href="logout">Logout</a>
-                    </span>
-                    @endauth
-
-                    @guest
+                    </span> @endauth @guest
                     <span class="navbar ">
                         <p>Guset</p>
                     </span>
                     <span class="navbar-text login_a">
                         <a href="#">Login/Register</a>
-                    </span>
-                    @endguest
+                    </span> @endguest
 
                 </div>
             </nav>
@@ -164,11 +160,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <!-- <img src="https://fakeimg.pl/30x30/" alt=""> Name -->
-                        <a class="navbar-brand" href="#">
-                            <img src="https://img.icons8.com/material-outlined/48/000000/cloud-link.png" /> Name
-                        </a>
-
-                        <p>describe</p>
+                        <!-- <a class="navbar-brand" href="#"> -->
+                        <!-- <img src="https://img.icons8.com/material-outlined/48/000000/cloud-link.png" /> Name -->
+                        <!-- </a> -->
+                        <h3>Url shorter</h3>
+                        <p>Make url easier</p>
                         <p>
                             &copy;0xdeciverAngel
                         </p>
@@ -203,24 +199,7 @@
 
 
 
-    <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Error message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body modal_error">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 
 
@@ -269,33 +248,36 @@
                             <form action="login" method="POST">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+                                    <input type="email" class="l_email form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
                                     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                                    <input type="password" class="l_password form-control" id="exampleInputPassword1" placeholder="Password" name="password" required>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Login</button>
                             </form>
+                                <button type="submit" class="login_btn btn btn-primary">Login</button>
+
                         </div>
                         <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register">
                             <form action="register" method="POST">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" name="name">
+                                    <input type="text" class="r_name form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" name="name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputPassword1" placeholder="Enter email" name="email">
+                                    <input type="email" class="r_eamil form-control" id="exampleInputPassword1" placeholder="Enter email" name="email" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password" name="password">
+                                    <input type="password" class="r_pw form-control" id="exampleInputPassword1" placeholder="Enter password" name="password" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Register</button>
+                                <button type="submit" class="reg_btn btn btn-primary">Register</button>
+
                             </form>
+
                         </div>
                     </div>
 
@@ -308,8 +290,38 @@
         </div>
     </div>
 
+    
+<div class="modal fade modal_error" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Error message</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body modal_error_body">
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="toast" id="myToast" style="position: absolute; top: 0; right: 0;" data-delay="5000">
+        <div class="toast-header">
+            <strong class="mr-auto"><i class="fa fa-grav"></i>Message</strong>
+
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            <div>error format</div>
+        </div>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -321,7 +333,7 @@
 
 </html>
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script> -->
-<script src="home.js"></script>
+<script src="index.js"></script>
 </body>
 
 </html>

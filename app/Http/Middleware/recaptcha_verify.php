@@ -16,10 +16,10 @@ class recaptcha_verify
      */
     public function handle($request, Closure $next)
     {
-        if(!$this->token_verify($request->grecaptcha ??'empty'))
-        {
-            return (array('result' => 'recaptcha verify fail'));
-        }
+        // if(!$this->token_verify($request->grecaptcha ??'empty'))
+        // {
+            // return (array('result' => 'recaptcha verify fail'));
+        // }
 
         return $next($request);
     }

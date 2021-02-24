@@ -8,26 +8,30 @@ use Validator;
 use App\User;
 use Hash;
 use DB;
+use Route;
 class LoginCon extends Controller
 {
 
     public function register(Request $request)
     {
-        $user=User::create([
-            'username' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+        $cred = $request->only('name', 'email','password');
+        $validator = Validator::make($cred,[
+            'name'=>'required',
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
-        AUTH::login($user,1);
-        return redirect()->intended('dashboard');
-
-        // return response('success');
+        if ($validator->passes()) {
+            $user = User::create([
+                'username' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+            AUTH::login($user, 1);
+            return redirect()->intended('dashboard');
+        } else {
+            return redirect()->intended('index');
+        }
     }
-    public function show()
-    {
-        return view('login');
-    }
-
     public function login(Request $request)
     {
         $cred=$request->only('email','password');
@@ -43,44 +47,31 @@ class LoginCon extends Controller
         // $user->password = $request->password;
         if(Auth::attempt($cred,1)&&$validator->passes())
         {
-            // return redirect('/',301);
-            // return 'ok';
-            return view('info');
+            return 'ok';
+            // return view('info');
+            // return redirect()->intended('dashboard');
         }
         else
         {
-            return redirect('/', 301);
-            
+            // return redirect('/', 301);
+            return response('error info');
         }
 
     }
-
     public function logout()
     {
         Auth::logout();
         return redirect('/',301);
     }
+    public function index()
+    {
+        return view('index');
+    }
     public function dashboard(Request $request)
     {
-        if($request->owner==NULL)
-        {
-            return redirect('/');
-        }
-        $res=DB::table('mapping')->where('owner',$request->owner)->get();
-        // return response($res);
+        $res=DB::table('mapping')->where('owner',$request->owner_id)->get();
         return view('dashboard',['user'=>$res]);
     }
-    public function home(Request $request)
-    {
-        // if($request->is_login===1)
-        // {
-            // $username = Auth::user();
-            // return view('home',['username'=>$username]);
-        // }
-        // else
-        // {
-            return view('home');
-        // }
-    }
+    
 }   
 

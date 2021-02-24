@@ -8,7 +8,7 @@ $(document).ready(function() {
             }).then(function(token) {
                 console.log(token);
                 api_result = $.post(
-                    $(location).attr('href').split('/')[$(location).attr('href').split('/').length - 1], {
+                    $(location).attr('href').split('/')[$(location).attr('href').split('/').length - 1] + '/verify', {
                         password: $(".password_input").val(),
                         grecaptcha: token,
                     },
