@@ -39,20 +39,22 @@ class url_mapping extends Controller
         }
         return 1;
     }
-    public function save_to_redis($hash, $url,$type,$red_time,$last_t_u,$pw,$f_n,$ex)
+    public function save_to_redis($hash, $url, $type, $red_time, $last_t_u, $pw, $f_n, $ex,$id)
     {
         $redis = Redis::connection();
         // $redis->set($hash, $url);
         // $redis->set($url, $hash);
-        $redis->hmset($hash,array("url"=>$url??"",
-                                  "type"=>$type??"",
-                                  "redirect_times"=>$red_time??"",
-                                  "last_time_use"=>$last_t_u??"",
-                                  "password"=>$pw??"",
-                                  "file_name"=>$f_n??"",
-                                  "extension"=>$ex??""
-                                
-                                ));
+        $redis->hmset($hash, array(
+            "url" => $url ?? "",
+            "type" => $type ?? "",
+            "redirect_times" => $red_time ?? "",
+            "last_time_use" => $last_t_u ?? "",
+            "password" => $pw ?? "",
+            "file_name" => $f_n ?? "",
+            "extension" => $ex ?? "",
+            "owner"=>$id??""
+
+        ));
     }
     public function is_in_redis($val) // hash or url both
     {
@@ -67,7 +69,7 @@ class url_mapping extends Controller
     public function get_red_times($hash)
     {
         $redis = Redis::connection();
-        return($redis->hget($hash, 'redirect_times'));
+        return ($redis->hget($hash, 'redirect_times'));
     }
     // public function red(Request $request)
     // {
@@ -104,25 +106,16 @@ class url_mapping extends Controller
 
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $url = $request->hash;
-        // $redis_val = $this->is_in_redis($url);
-        // if ($redis_val !== NULL) {
-        //     $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-        //     $red_time = $find_url->redirect_times;
-        //     DB::table('mapping')->where('redirect_url', $url)->update(
-        //         ['redirect_times' => ++$red_time, 'last_time_use' => $date]
-        //     );
-        //     return redirect($redis_val);
-        // } else {
-
         $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-        $red_time = $find_url->redirect_times;
         if ($find_url != NULL) {
+            $red_time = $find_url->redirect_times;
+            $red_time++;
             if ($find_url->type === 'url') { // if is url 
-                // $this->save_to_redis($url, $find_url->org_url);
                 $find_url = DB::table('mapping')->where('redirect_url', $url)->first();
-                $red_time = $find_url->redirect_times;
+                $this->save_to_redis($find_url->redirect_url, $find_url->org_url, "url", $red_time, $date->format('Y-m-d H:i:s'), "", "", "",$find_url->owner_id);
+
                 DB::table('mapping')->where('redirect_url', $url)->update(
-                    ['redirect_times' => ++$red_time, 'last_time_use' => $date]
+                    ['redirect_times' => $red_time, 'last_time_use' => $date]
                 );
                 return redirect($find_url->org_url, 301
                     // , ['custom-header' => 'custom value']
@@ -132,6 +125,8 @@ class url_mapping extends Controller
                 $filename = $find_url->file_name . "." . $file_extension;
                 $contents = Storage::get($filename);
                 $base64_data = base64_encode($contents);
+                $this->save_to_redis($find_url->redirect_url, $find_url->org_url, "img", $red_time, $date->format('Y-m-d H:i:s'), $find_url->password, $find_url->file_name, $find_url->extension, $find_url->owner_id);
+                
                 return view(
                     'img_password',
                     [
@@ -140,6 +135,8 @@ class url_mapping extends Controller
                     ]
                 )->render();
             } else if ($find_url->type === 'img') { //if is img and have to check password
+                $this->save_to_redis($find_url->redirect_url, $find_url->org_url, "img", $red_time, $date->format('Y-m-d H:i:s'), $find_url->password, $find_url->file_name, $find_url->extension, $find_url->owner_id);
+                
                 return view(
                     'img_password',
                     [
@@ -165,14 +162,14 @@ class url_mapping extends Controller
         $to_hash = $org_url . "Sa1t" . bin2hex(random_bytes(6));
         $hash_url = sha1($to_hash);
         $hash_url = substr($hash_url, 0, 5);
-        $this->save_to_redis($hash_url, $org_url,"url",0, $date->format('Y-m-d H:i:s'),"","","");
+        $this->save_to_redis($hash_url, $org_url, "url", 0, $date->format('Y-m-d H:i:s'), "", "", "",Auth::user()->id);
         DB::table('mapping')->insert(
             [
                 'org_url' => (string) $org_url,
                 'redirect_url' => (string) $hash_url,
                 'type' => 'url',
                 'creat_time' => $date->format('Y-m-d H:i:s'),
-                'owner' => Auth::user()->id??""
+                'owner' => Auth::user()->id ?? ""
             ]
         );
         return (array('org' => urlencode($org_url), 'result' => $hash_url));
@@ -193,7 +190,7 @@ class url_mapping extends Controller
             $ranom_file_name = substr($ranom_file_name, 0, 6);
 
             Storage::put($ranom_file_name . '.' . $file_extension, $request->file('file')->get());
-            $this->save_to_redis($ranom_file_name, '', "img", 0, $date->format('Y-m-d H:i:s'), $password, $ranom_file_name, $file_extension);
+            $this->save_to_redis($ranom_file_name, '', "img", 0, $date->format('Y-m-d H:i:s'), $password, $ranom_file_name, $file_extension, Auth::user()->id);
             DB::table('mapping')->insert(
                 [
                     'file_name' => (string) $ranom_file_name,

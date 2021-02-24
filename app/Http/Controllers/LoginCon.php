@@ -29,7 +29,7 @@ class LoginCon extends Controller
             AUTH::login($user, 1);
             return redirect()->intended('dashboard');
         } else {
-            return redirect()->intended('home');
+            return redirect()->intended('index');
         }
     }
     public function login(Request $request)
