@@ -14,15 +14,15 @@ class CreateMappingTable extends Migration
     public function up()
     {
         Schema::create('mapping', function (Blueprint $table) {
-            $table->text('org_url')->default(NULL)->nullable($value = true);
-            $table->text('redirect_url')->default(NULL)->nullable($value = true);
+            $table->text('org_url')->default("");
+            $table->text('redirect_url')->default("");
             $table->unsignedInteger('redirect_times')->default('0');
             $table->dateTimeTz('creat_time')->default(NULL)->nullable($value = true);
             $table->dateTimeTz('last_time_use')->default(NULL)->nullable($value = true);
-            $table->text('file_name')->default(NULL)->nullable($value = true);
-            $table->text('password')->default(NULL)->nullable($value = true);
-            $table->text('extension')->default(NULL)->nullable($value = true);
-            $table->text('type')->default(NULL)->nullable($value = true);
+            $table->text('file_name')->default("");
+            $table->text('password')->default("");
+            $table->text('extension')->default("");
+            $table->text('type')->default("");
             $table->text('owner')->default("");
 
         });
