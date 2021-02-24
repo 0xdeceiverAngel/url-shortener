@@ -15,7 +15,7 @@ use Auth;
 
 class url_mapping extends Controller
 {
-    public function check_img_size_and_type(Request $request)
+    public function check_img_size_and_type_and_pw(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'file' => 'max:500000',
@@ -23,6 +23,9 @@ class url_mapping extends Controller
         ]);
         if ($validator->fails()) {
             return (array('result' => 'img_too_large or not_img'));
+        }
+        if (is_null($request->password)) {
+            return (array('result' => 'must enter password'));
         }
         return 1;
     }
@@ -177,13 +180,10 @@ class url_mapping extends Controller
     public function img_creat(Request $request)
     {
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
-        $val = $this->check_img_size_and_type($request);
+        $val = $this->check_img_size_and_type_and_pw($request);
         if (1 != $val) {
             return $val;
         }
-        if (is_null($request->password)) {
-            return (array('result' => 'must enter password'));
-        } else {
             $password = $request->password;
             $file_extension = $request->extension;
             $ranom_file_name = bin2hex(random_bytes(16));
@@ -205,6 +205,5 @@ class url_mapping extends Controller
             );
 
             return (array('result' => $ranom_file_name));
-        }
     }
 }

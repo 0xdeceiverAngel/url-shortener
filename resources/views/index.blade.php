@@ -160,11 +160,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <!-- <img src="https://fakeimg.pl/30x30/" alt=""> Name -->
-                        <a class="navbar-brand" href="#">
-                            <img src="https://img.icons8.com/material-outlined/48/000000/cloud-link.png" /> Name
-                        </a>
-
-                        <p>describe</p>
+                        <!-- <a class="navbar-brand" href="#"> -->
+                        <!-- <img src="https://img.icons8.com/material-outlined/48/000000/cloud-link.png" /> Name -->
+                        <!-- </a> -->
+                        <h3>Url shorter</h3>
+                        <p>Make url easier</p>
                         <p>
                             &copy;0xdeciverAngel
                         </p>
@@ -199,7 +199,7 @@
 
 
 
-    <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade modal_error" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -208,7 +208,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body modal_error">
+                <div class="modal-body modal_error_body">
 
                 </div>
                 <div class="modal-footer">
@@ -265,12 +265,12 @@
                             <form action="login" method="POST">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
                                     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" required>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Login</button>
@@ -280,15 +280,15 @@
                             <form action="register" method="POST">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" name="name">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name" name="name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputPassword1" placeholder="Enter email" name="email">
+                                    <input type="email" class="form-control" id="exampleInputPassword1" placeholder="Enter email" name="email" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password" name="password">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter password" name="password" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Register</button>
                             </form>
