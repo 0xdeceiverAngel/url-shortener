@@ -47,13 +47,14 @@ class LoginCon extends Controller
         // $user->password = $request->password;
         if(Auth::attempt($cred,1)&&$validator->passes())
         {
-            // return 'ok';
+            return 'ok';
             // return view('info');
-            return redirect()->intended('dashboard');
+            // return redirect()->intended('dashboard');
         }
         else
         {
-            return redirect('/', 301);
+            // return redirect('/', 301);
+            return response('error info');
         }
 
     }
