@@ -7,6 +7,7 @@ use Redis;
 use Storage;
 use DateTime;
 use DateTimeZone;
+use view;
 class check_url_cache
 {
     /**
@@ -28,6 +29,7 @@ class check_url_cache
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $redis = Redis::connection();
         $res=$redis->hgetall($request->hash);
+        // return response($res["password"]);
         if($res!=NULL)
         {
             if ($res["type"] == "url") {
@@ -35,29 +37,29 @@ class check_url_cache
                 return redirect($res["url"], 301);
             }
 
-            // if ($res["type"] == 'img' && is_null($res["password"])) {
-            //     $filename = $res["file_name"] . "." . $res["file_extension"];
-            //     $contents = Storage::get($filename);
-            //     $base64_data = base64_encode($contents);
-            //     $this->update($request->hash, $date->format('Y-m-d H:i:s'));
-            //     return view(
-            //         'img_password',
-            //         [
-            //             'img_data' => $base64_data,
-            //             'summit_disyplay' => 'd-none',
-            //         ]
-            //     )->render();
-            // }
-
-            // if ($res["type"] == 'img') {
-            //     $this->update($request->hash, $date->format('Y-m-d H:i:s'));
-            //     return view(
-            //         'img_password',
-            //         [
-            //             'summit_disyplay' => 'input password',
-            //         ]
-            //     )->render();
-            // }
+            }
+            if ($res["type"] == 'img'&&($res["password"]!=NULL)) {
+                $this->update($request->hash, $date->format('Y-m-d H:i:s'));
+                return response(view(
+                'img_password',
+                [
+                    'summit_disyplay' => 'input password',
+                ]
+            ));
+            }
+            
+            if ($res["type"] == 'img') {
+            $filename = $res["file_name"] . "." . $res["extension"];
+            $contents = Storage::get($filename);
+            $base64_data = base64_encode($contents);
+            $this->update($request->hash, $date->format('Y-m-d H:i:s'));
+            return response(view(
+                'img_password',
+                [
+                    'img_data' => $base64_data,
+                    'summit_disyplay' => 'd-none',
+                ]
+            ));
         }
        
         return $next($request);

@@ -24,9 +24,9 @@ class url_mapping extends Controller
         if ($validator->fails()) {
             return (array('result' => 'img_too_large or not_img'));
         }
-        if (is_null($request->password)) {
-            return (array('result' => 'must enter password'));
-        }
+        // if (is_null($request->password)) {
+            // return (array('result' => 'must enter password'));
+        // }
         return 1;
     }
     public function check_url(Request $request)
@@ -96,6 +96,9 @@ class url_mapping extends Controller
             $filename = $find_url->file_name . "." . $file_extension;
             $contents = Storage::get($filename);
             $base64_data = base64_encode($contents);
+            $redis = Redis::connection();
+            $redis->hincrby($url, 'redirect_times', 1);
+            $redis->hmset($url, 'last_time_use', $date->format('Y-m-d H:i:s'));
             DB::table('mapping')->where('redirect_url', $url)->update(
                 ['last_time_use' => $date]
             );
@@ -138,7 +141,7 @@ class url_mapping extends Controller
                     ]
                 )->render();
             } else if ($find_url->type === 'img') { //if is img and have to check password
-                $this->save_to_redis($find_url->redirect_url, $find_url->org_url, "img", $red_time, $date->format('Y-m-d H:i:s'), $find_url->password, $find_url->file_name, $find_url->extension, $find_url->owner_id);
+                $this->save_to_redis($find_url->redirect_url, $find_url->org_url, "img", $red_time, $date->format('Y-m-d H:i:s'), $find_url->password, $find_url->file_name, $find_url->extension, $find_url->owner);
                 
                 return view(
                     'img_password',

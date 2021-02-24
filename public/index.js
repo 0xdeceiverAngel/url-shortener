@@ -85,7 +85,7 @@ $(document).ready(function() {
             }).then(function(token) {
                 console.log(token);
                 // Add your logic to submit to your backend server here.
-                if ($('.img_upload').prop('files').length != 0 && $('.password_input').val() != "") {
+                if ($('.img_upload').prop('files').length != 0) {
                     $('.progress_modal').modal('show');
                     $(".result_zone").addClass("d-none");
                     var file_data = $('.img_upload').prop('files')[0];
@@ -123,7 +123,7 @@ $(document).ready(function() {
                         }
                     })
                 } else {
-                    $('.modal_error_body').html('No file choosen or password input');
+                    $('.modal_error_body').html('No file choosen ');
                     $('.modal_error').modal('show');
                 }
 

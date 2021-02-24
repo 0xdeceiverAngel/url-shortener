@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'g-recaptcha'=>\App\Http\Middleware\recaptcha_verify::class,
         'check_is_login'=> \App\Http\Middleware\check_is_login::class,
         'check_url_cache'=>\App\Http\Middleware\check_url_cache::class,
+        'check_url_verify'=> \App\Http\Middleware\check_url_verify::class
     ];
 }
