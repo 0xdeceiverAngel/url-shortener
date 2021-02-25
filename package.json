@@ -1,13 +1,12 @@
 {
     "private": true,
     "scripts": {
-        "start": "php artisan serve&&sudo docker container start d_sql&&sudo docker container start d_redis",
+        "up": "php artisan serve&&sudo docker container start d_sql&&sudo docker container start d_redis&&php artisan queue:work",
         "key_gen": "php artisan key:generate",
         "migrate": "php artisan migrate:fresh",
-        "conf_cls": "php artisan config:clear",
+        "cls": "php artisan config:clear&&php artisan cache:clear&&php artisan view:clear",
         "docker_install": "sudo docker pull mysql&&sudo docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d --name=d_sql mysql&&sudo docker pull redis&&sudo docker run  -p 6379:6379 -d --name=d_redis redis",
-        "dep_install": "composer install&&composer update&&php artisan config:clear&&php artisan key:generate&&php artisan migrate:fresh # this will erease your db&&php artisan view:clear",
-        "first_time": "docker_install&&dep_install&&start"
+        "": ""
     },
     "devDependencies": {
         "axios": "^0.19",
