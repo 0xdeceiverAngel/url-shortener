@@ -2,7 +2,10 @@ var now_clk_url = "";
 
 $(document).ready(function() {
     $('.del_btn').click(function() {
-        $.post("delete", { url: $('.del_btn').attr('url') }, function(data) {
+        now_clk_url = $(this).attr('url');
+        $.post("delete", {
+            url: now_clk_url
+        }, function(data) {
             if ('success' == data) {
                 console.log('ok');
                 location.reload();
