@@ -164,7 +164,7 @@ class url_mapping extends Controller
                     'last_time_use' => $date
                 );
                 $job = (new db_sync($tmp));
-                $this->dispatch($job);
+                // $this->dispatch($job);
 
                 return view(
                     'img_password',
@@ -191,7 +191,7 @@ class url_mapping extends Controller
         $to_hash = $org_url . "Sa1t" . bin2hex(random_bytes(6));
         $hash_url = sha1($to_hash);
         $hash_url = substr($hash_url, 0, 5);
-        $this->save_to_redis($hash_url, $org_url, "url", $date->format('Y-m-d H:i:s'), 0, "", "", "", "", Auth::user()->id);
+        $this->save_to_redis($hash_url, $org_url, "url", $date->format('Y-m-d H:i:s'), 0, "", "", "", "", Auth::user()->id??"");
 
         $tmp = array(
             "method" => "insert-url",
@@ -203,7 +203,7 @@ class url_mapping extends Controller
             "password" => "",
             "file_name" => "",
             "extension" => "",
-            "owner" => Auth::user()->id
+            "owner" => Auth::user()->id??""
         );
         $job = (new db_sync($tmp));
         $this->dispatch($job);
@@ -223,7 +223,7 @@ class url_mapping extends Controller
         $ranom_file_name = substr($ranom_file_name, 0, 6);
 
         Storage::put($ranom_file_name . '.' . $file_extension, $request->file('file')->get());
-        $this->save_to_redis($ranom_file_name, '', "img", $date->format('Y-m-d H:i:s'), 0, "", $password, $ranom_file_name, $file_extension, Auth::user()->id);
+        $this->save_to_redis($ranom_file_name, '', "img", $date->format('Y-m-d H:i:s'), 0, "", $password, $ranom_file_name, $file_extension, Auth::user()->id??"");
         $tmp = array(
             "method" => "insert-img",
             "hash" => $ranom_file_name,
@@ -234,7 +234,7 @@ class url_mapping extends Controller
             "password" => $password,
             "file_name" => $ranom_file_name,
             "extension" => $file_extension,
-            "owner" => Auth::user()->id
+            "owner" => Auth::user()->id??""
         );
         $job = (new db_sync($tmp));
         $this->dispatch($job);

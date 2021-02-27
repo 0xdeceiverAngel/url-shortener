@@ -43,12 +43,13 @@ class url_manage extends Controller
         // if ($validator->passes()) {
         $res = DB::table('mapping')->where('redirect_url', $request->url)->first();
         if ((string)$res->owner == (string)$request->owner_id) {
-           
+
+          
 
             $tmp = array(
                 "method" => "change_pw",
-                "url" => $request->url,
-                "pw"=>$request->password
+                "url" => $res->url,
+                "pw"=>$res->pw
             );
             $job = (new db_sync($tmp));
             dispatch_now($job);

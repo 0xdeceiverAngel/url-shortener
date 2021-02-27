@@ -40,7 +40,7 @@ class check_url_cache
         $date = new DateTime("now", new DateTimeZone('Asia/Taipei'));
         $redis = Redis::connection();
         $res = $redis->hgetall($request->hash);
-        // return response(gettype($res).sizeof($res). (count($res)));
+        // return response($res["password"]);
         if (count($res)) {
 
             if ($res["type"] == "url") {
@@ -49,7 +49,7 @@ class check_url_cache
             }
 
             if ($res["type"] == 'img' && ($res["password"] != NULL)) {
-                $this->update($request->hash, $date->format('Y-m-d H:i:s'));
+                // $this->update($request->hash, $date->format('Y-m-d H:i:s'));
                 return response(view(
                     'img_password',
                     [
