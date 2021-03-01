@@ -44,12 +44,14 @@ class url_manage extends Controller
         $res = DB::table('mapping')->where('redirect_url', $request->url)->first();
         if ((string)$res->owner == (string)$request->owner_id) {
 
-          
+            $redis = Redis::connection();
+            $redis->hmset($request->url, 'password', $request->pw);
+           
 
             $tmp = array(
                 "method" => "change_pw",
-                "url" => $res->url,
-                "pw"=>$res->pw
+                "url" => $request->url,
+                "pw"=>$request->pw
             );
             $job = (new db_sync($tmp));
             dispatch_now($job);

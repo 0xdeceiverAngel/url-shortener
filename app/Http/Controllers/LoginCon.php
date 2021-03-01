@@ -9,6 +9,7 @@ use App\User;
 use Hash;
 use DB;
 use Route;
+use Redis;
 class LoginCon extends Controller
 {
 
@@ -45,8 +46,26 @@ class LoginCon extends Controller
         // $user = new User;
         // $user->email= $request->email;
         // $user->password = $request->password;
+
         if(Auth::attempt($cred,1)&&$validator->passes())
         {
+            $res = DB::table('mapping')->where('owner', Auth::user()->id)->get();
+            $redis = Redis::connection();
+            foreach($res as $data)
+            {
+                $redis->hmset($data->redirect_url, array(
+                    "url" => $data->org_url ?? "",
+                    "type" => $data->type ?? "",
+                    "redirect_times" => $data->redirect_times ?? "",
+                    "creat_time" => $data->creat_time ?? "",
+                    "last_time_use" => $data->last_time_use ?? "",
+                    "password" => $data->password ?? "",
+                    "file_name" => $data->file_name ?? "",
+                    "extension" => $data->extension ?? "",
+                    "owner" =>  Auth::user()->id ?? ""
+                ));
+                
+            }
             return 'ok';
             // return view('info');
             // return redirect()->intended('dashboard');
@@ -69,8 +88,8 @@ class LoginCon extends Controller
     }
     public function dashboard(Request $request)
     {
-        $res=DB::table('mapping')->where('owner',$request->owner_id)->get();
-        return view('dashboard',['user'=>$res]);
+        $res = DB::table('mapping')->where('owner', $request->owner_id)->get();
+        return view('dashboard', ['user' => $res]);
     }
     
 }   

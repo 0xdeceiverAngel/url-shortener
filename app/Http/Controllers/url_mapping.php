@@ -62,17 +62,6 @@ class url_mapping extends Controller
 
         ));
     }
-    public function is_in_redis($val) // hash or url both
-    {
-        $redis = Redis::connection();
-        $res = $redis->get($val);
-        if ($res != NULL) {
-            return $res;
-        } else {
-            return NULL;
-        }
-    }
-
     //==============================================================
     public function img_pw_verify(Request $request)
     {
