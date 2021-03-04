@@ -21,6 +21,8 @@ $(document).ready(function() {
                         } else {
                             $('.img_show').attr("src", "data:image/png;base64," + data);
                             $('.summit_area').hide();
+                            $('.img_aera').removeClass("d-none");
+
                         }
 
                     }

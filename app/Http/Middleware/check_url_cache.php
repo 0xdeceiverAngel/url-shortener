@@ -54,6 +54,7 @@ class check_url_cache
                     'img_password',
                     [
                         'summit_disyplay' => 'input password',
+                        'img_display'=>'d-none'
                     ]
                 ));
             }

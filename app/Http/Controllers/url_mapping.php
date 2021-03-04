@@ -208,9 +208,8 @@ class url_mapping extends Controller
         }
         $password = $request->password;
         $file_extension = $request->extension;
-        $ranom_file_name = bin2hex(random_bytes(16));
-        $ranom_file_name = substr($ranom_file_name, 0, 6);
-
+        $ranom_file_name = bin2hex(random_bytes(32));
+        $ranom_file_name = substr(sha1($ranom_file_name.'sa1t'), 0, 6);
         Storage::put($ranom_file_name . '.' . $file_extension, $request->file('file')->get());
         $this->save_to_redis($ranom_file_name, '', "img", $date->format('Y-m-d H:i:s'), 0, "", $password, $ranom_file_name, $file_extension, Auth::user()->id??"");
         $tmp = array(

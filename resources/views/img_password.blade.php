@@ -58,7 +58,7 @@
     </div>
     </div>
 
-    <div class="img_aera">
+    <div class="img_aera {{$img_display ?? ''}}">
         <div class="container">
             <div class="row justify-content-center">
                 <img src="data:image/png;base64,{{$img_data??''}}" class="img_show" alt="" style="width:75%">
