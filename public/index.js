@@ -169,6 +169,27 @@ $(document).ready(function() {
         );
     });
 
-
+    $('.reg_btn').click(function() {
+        res = $.post(
+            "register", {
+                name: $('.r_name').val(),
+                email: $('.r_email').val(),
+                password: $('.r_pw').val()
+            },
+            function(data) {
+                if (data == 'format error') {
+                    $('.modal_error_body').html(data);
+                    $('.modal_error').modal('show');
+                }
+                if (data == 'exist') {
+                    $('.modal_error_body').html('This eamil has alrealy register');
+                    $('.modal_error').modal('show');
+                }
+                if (data == 'ok') {
+                    window.location.href = "dashboard";
+                }
+            }
+        );
+    });
 
 });

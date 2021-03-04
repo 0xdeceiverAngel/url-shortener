@@ -12,9 +12,10 @@ use Route;
 use Redis;
 class LoginCon extends Controller
 {
-
+    
     public function register(Request $request)
     {
+        
         $cred = $request->only('name', 'email','password');
         $validator = Validator::make($cred,[
             'name'=>'required',
@@ -22,15 +23,23 @@ class LoginCon extends Controller
             'password' => 'required'
         ]);
         if ($validator->passes()) {
+            $res = DB::table('users')->where('email', $request->email)->first();
+            if(sizeof((array)$res)!=0)
+            {
+                return response('exist');
+            }
             $user = User::create([
                 'username' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password)
             ]);
             AUTH::login($user, 1);
-            return redirect()->intended('dashboard');
+            return response('ok');
+            // return redirect()->intended('dashboard');
         } else {
-            return redirect()->intended('index');
+            // return redirect()->intended('index');
+            return response('format error');
+
         }
     }
     public function login(Request $request)
