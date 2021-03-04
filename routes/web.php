@@ -20,7 +20,7 @@ Route::group(['middleware' => ['g-recaptcha']], function () {
     Route::post('/{hash}/verify', 'url_mapping@img_pw_verify');
 });
 Route::group(['middleware' => ['check_is_login']], function () {
-    Route::get('dashboard', 'LoginCon@dashboard');//find all save to redis
+    Route::get('dashboard', 'LoginCon@dashboard')->name('dashboard');
     Route::post('delete', 'url_manage@delete_url')->middleware('check_url_verify');
     Route::post('change_pw', 'url_manage@change_pw')->middleware('check_url_verify');
 });
@@ -40,7 +40,7 @@ Route::post('store', 'ProgressBarUploadFileController@store');
 
 
 
-Route::post('login', 'LoginCon@login');
+Route::post('login', 'LoginCon@login')->name('login');
 Route::post('register', 'LoginCon@register');
 Route::get('logout', 'LoginCon@logout');
 Route::get('/','LoginCon@index');
