@@ -24,7 +24,7 @@ services:
       container_name: url_shortener
       ports:
         - 8000:8000
-      # stdin_open: true
+      stdin_open: true
       tty: true
       network_mode: "host"
       depends_on:

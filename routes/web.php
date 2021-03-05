@@ -18,6 +18,7 @@ Route::group(['middleware' => ['g-recaptcha']], function () {
     Route::post('/api', 'url_mapping@creat_url');
     Route::post('/img_api', 'url_mapping@img_creat');
     Route::post('/{hash}/verify', 'url_mapping@img_pw_verify');
+    Route::post('upload_api', 'uploadfileController@store');
 });
 Route::group(['middleware' => ['check_is_login']], function () {
     Route::get('dashboard', 'LoginCon@dashboard')->name('dashboard');
@@ -27,7 +28,7 @@ Route::group(['middleware' => ['check_is_login']], function () {
 
 Route::get('/db1', function () {
     return DB::table('mapping')->get();
-});
+})->name('db1');
 Route::get('/db2', function () {
     return DB::table('users')->get();
 });
@@ -35,8 +36,8 @@ Route::get('/php', function () {
     return view('php');
 });
 
-Route::get('ajax-file-upload-progress-bar', 'ProgressBarUploadFileController@index');
-Route::post('store', 'ProgressBarUploadFileController@store');
+Route::get('download/{ranom_file_name}', 'uploadfileController@download')->name('download');
+// Route::get('upload', 'uploadfileController@index');
 
 
 

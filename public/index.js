@@ -191,5 +191,80 @@ $(document).ready(function() {
             }
         );
     });
+    // var bar = $('.bar');
+    // var percent = $('.percent');
+    // $('form').ajaxForm({
+    //     beforeSend: function() {
+    //         var percentVal = '0%';
+    //         bar.width(percentVal)
+    //         percent.html(percentVal);
+    //     },
+    //     uploadProgress: function(event, position, total, percentComplete) {
+    //         var percentVal = percentComplete + '%';
+    //         bar.width(percentVal)
+    //         percent.html(percentVal);
+    //     },
+    //     complete: function(xhr) {}
+    // });
 
+    $(".file_cloud_btn").click(function() {
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6Le1lLUZAAAAAEpqoDAtR-mmAvQ28F2ymOVqF7Lm', {
+                action: 'submit'
+            }).then(function(token) {
+                console.log(token);
+                // Add your logic to submit to your backend server here.
+                if ($('.file_cloud_input').prop('files').length != 0) {
+                    if ($('.file_cloud_input').prop('files')[0].size > 10240) {
+                        $('.modal_error_body').html('file too large');
+                        $('.modal_error').modal('show');
+
+                    } else {
+                        $('.progress_modal').modal('show');
+                        $(".result_zone").addClass("d-none");
+                        var file_data = $('.file_cloud_input').prop('files')[0];
+                        var fileform = new FormData();
+                        fileform.append('file', file_data);
+                        fileform.append('grecaptcha', token);
+                        // fileform.append('password', $('.password_input').val());
+                        // fileform.append('extension', fileName.split('.')[1]);
+                        $.ajax({
+                            url: 'upload_api',
+                            enctype: 'multipart/form-data',
+                            type: 'post',
+                            data: fileform,
+                            grecaptcha: token,
+                            contentType: false,
+                            processData: false,
+                            cache: false,
+                            success: function(data) {
+                                // console.log(respon);
+                                $(".url_result").val(data.result);
+                                $(".url_qrcode").empty();
+                                $('.progress_modal').modal('hide');
+                                if (data.result == "img_error" || data.result == "must enter password") {
+                                    // alert('url error');
+                                    $('.modal_error_body').html(data.result);
+                                    $('.modal_error').modal('show');
+                                } else {
+                                    $(".url_qrcode").qrcode({
+                                        width: 120,
+                                        height: 120,
+                                        text: data.result,
+                                    });
+                                    $(".result_zone").removeClass("d-none");
+                                }
+                            }
+                        })
+                    }
+
+                } else {
+                    $('.modal_error_body').html('No file choosen');
+                    $('.modal_error').modal('show');
+                }
+
+
+            });
+        });
+    });
 });

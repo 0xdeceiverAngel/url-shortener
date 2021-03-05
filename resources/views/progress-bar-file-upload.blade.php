@@ -36,7 +36,7 @@
                         <h4>Laravel 7 Ajax File Upload with Progress Bar Example</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="store" enctype="multipart/form-data">
+                        <form method="POST" action="upload_api" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <input name="file" type="file" class="form-control"><br />
@@ -72,7 +72,6 @@
                     },
                     complete: function(xhr) {
                         alert('File Has Been Uploaded Successfully');
-                        window.location.href = SITEURL + "/" + "ajax-file-upload-progress-bar";
                     }
                 });
             });

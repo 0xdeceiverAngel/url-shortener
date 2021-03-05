@@ -87,6 +87,9 @@
             <li class="nav-item">
                 <a class="nav-link img_input_space" id="pills-img-tab" data-toggle="pill" href="#pills-img" role="tab" aria-controls="pills-img" aria-selected="false">img</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-filecloud-tab" data-toggle="pill" href="#pills-filecloud" role="tab" aria-controls="pills-filecloud" aria-selected="false">Filecloud</a>
+            </li>
         </ul>
 
 
@@ -122,7 +125,29 @@
                     </div>
                 </div>
             </div>
+            <div class="tab-pane fade" id="pills-filecloud" role="tabpanel" aria-labelledby="pills-filecloud">
+                <h6 class="text-center">Max file size:10MB</h6>
+                <h6 class="text-center">File life time:10 minutes</h6>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input file_cloud_input" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                        <!-- <span class="input-group-text file_cloud_btn" id="">Upload</span>
+                         -->
+                        <input type="submit" value="Upload" class="btn btn btn-outline-secondary file_cloud_btn ">
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
         </div>
+    </div>
     </div>
 
     </div>
@@ -199,7 +224,7 @@
 
 
 
-    
+
 
 
 
@@ -257,7 +282,7 @@
                                 </div>
 
                             </form>
-                                <button type="submit" class="login_btn btn btn-primary">Login</button>
+                            <button type="submit" class="login_btn btn btn-primary">Login</button>
 
                         </div>
                         <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register">
@@ -276,8 +301,7 @@
                                 </div>
 
                             </form>
-                                <button type="submit" class="reg_btn btn btn-primary">Register</button>
-
+                            <button type="submit" class="reg_btn btn btn-primary">Register</button>
                         </div>
                     </div>
 
@@ -290,8 +314,8 @@
         </div>
     </div>
 
-    
-<div class="modal fade modal_error" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal fade modal_error" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
