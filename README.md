@@ -8,7 +8,6 @@
 - use redis be cache,queue db action
 - dockerize
 ## base on 
-- docker
 - laravel 
 - mysql
 - redis
@@ -163,5 +162,9 @@ php artisan db:create
 原本的code沒變，加上新code，就抓不到舊東西
 
 以上是自己的看法，也可能是我太弱雞，需要再加強
+
+2021/3/23更新
+
+vm死掉重新灌一次，build images時，被LF CRFL陰了一把
 
 

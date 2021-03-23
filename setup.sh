@@ -1,8 +1,8 @@
 #!/bin/bash
-apt-get update -y 
+apt-get update 
 apt-get install software-properties-common -y
 add-apt-repository ppa:ondrej/php -y
-apt-get update -y 
+apt-get update
 apt-get install --assume-yes apt-utils -y 
 apt-get install netcat -y
 # apt install -y php-mysql php-fpm php-mbstring 
