@@ -50,7 +50,7 @@
                         <a href="logout">Logout</a>
                     </span> @endauth @guest
                     <span class="navbar ">
-                        <p>Guset</p>
+                        <p>Guest</p>
                     </span>
                     <span class="navbar-text login_a">
                         <a href="#">Login/Register</a>
